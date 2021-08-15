@@ -1,0 +1,8 @@
+@import "../base/layout";
+
+#task-manager {
+    display: grid;
+
+    grid-template-rows: calc(#{$sidebar-width} - 20px) 1fr;
+    grid-template-columns: 1fr;
+}

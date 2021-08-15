@@ -1,0 +1,27 @@
+@import "../abstractions/colors";
+
+* {
+    font-family: "Roboto", sans-serif;
+}
+
+p,
+button {
+    font-size: 1.6rem;
+}
+
+p {
+    color: clr(font, default);
+}
+
+.text {
+    &-light {
+        color: clr(font, white);
+    }
+    &-dark {
+        color: clr(font, black);
+    }
+}
+
+a {
+    color: clr(primary);
+}
