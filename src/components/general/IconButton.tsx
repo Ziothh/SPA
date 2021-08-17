@@ -7,9 +7,11 @@ interface Props {
     activeColor?: string
     fillOnActive?: boolean
     className?: string,
-    children: JSX.Element
+    title?: string,
 
     onClick?: () => void
+
+    children: JSX.Element
 }
 
 
@@ -20,6 +22,7 @@ const IconButton: React.FC<Props> = ({
     onClick, 
     color = "#1c1c28",
     fillOnActive = false,
+    title,
     className
 }) => {
     const [active, setActive] = useState(isActive)
@@ -44,21 +47,17 @@ const IconButton: React.FC<Props> = ({
                 fill: active && activeColor ? activeColor : color
             }
         
-        console.log(coloring);
-        
         setStyling(coloring)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [active])
-    
-    console.log(`
-    .icon-button svg ${JSON.stringify(styling)}
-`);
     
     return (
         <>
             <button
                 className={`icon-button ${className}`}
+                title={title}
                 onClick={() => {
+                    onClick && onClick()
                     setActive(!active)
                     return onClick
                 }}

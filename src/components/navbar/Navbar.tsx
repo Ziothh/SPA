@@ -16,7 +16,7 @@ import DarkModeSwitch from "./components/DarkModeSwitch"
 
 const Navbar: React.FC = () => {
     return (
-        <div id="navbar">
+        <header id="navbar">
             <nav>
                 <NavLogo/>
                 <NavbarLink destination={""}>
@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
                 </NavbarLink>
                 <DarkModeSwitch isDark={true}/>
             </nav>
-        </div>
+        </header>
     )
 }
 

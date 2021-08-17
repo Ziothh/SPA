@@ -1,0 +1,7 @@
+@import "../base/variables";
+@import "../abstractions/colors";
+
+.theme-light {
+    background: clr(background, light);
+    color: clr(font, light, default);
+}

@@ -4,8 +4,9 @@ import type { TaskCategoryData } from "./TaskCategory"
 export type TaskPageData = {
     title: {
         name: string,
-        color: string,
+        colorClass: string,
     },
+    id: number,
     isBookmarked: boolean,
     categories: TaskCategoryData[] | []
 }

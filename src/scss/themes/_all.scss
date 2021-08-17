@@ -1,0 +1,10 @@
+// To make a new theme: set the css variables inside the class
+@import "./darkTheme";
+@import "./lightTheme";
+
+@import "../abstractions/colors";
+
+#app-container {
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}

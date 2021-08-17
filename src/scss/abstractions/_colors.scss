@@ -1,22 +1,38 @@
+// Default colors
 $colors: (
-    primary: #3e7bfa,
+    primary: #bb2d3b,
     // other colors
     blue: #3e7bfa,
+    light-blue: #4baaf5,
     dark-blue: rgb(12, 16, 45),
-    purple: #ac5dda,
+    purple: #af50bf,
     orange: rgb(253, 155, 0),
     seagreen: #01b5be,
     green: rgb(7, 175, 33),
-    teal: #73e0e7,
+    avocado: rgb(174, 197, 35),
+    yellow: #fccc55,
+    indigo: #6372c3,
+    teal: #30aa9f,
+    red: #bb2d3b,
+    bluegray: #7e96a1,
+    cyan: #30c9dc,
+    pink: #ed4981,
     white: #e5e7f7,
     black: #1c1c28,
     font: (
         default: #e5e7f7,
-        white: #e5e7f7,
-        black: #1c1c28,
+        dark: (
+            default: #e5e7f7,
+            inverse: #1c1c28,
+        ),
+        light: (
+            default: #1c1c28,
+            inverse: #e5e7f7,
+        ),
     ),
     background: (
-        default: #1c1c28,
+        dark: #1c1c28,
+        light: #e5e7f7,
     ),
 );
 

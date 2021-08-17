@@ -1,5 +1,9 @@
 @import "../abstractions/colors";
 
+:root {
+    --clr-primary: #{clr(primary)};
+}
+
 * {
     font-family: "Roboto", sans-serif;
 }
@@ -10,18 +14,19 @@ button {
 }
 
 p {
-    color: clr(font, default);
-}
-
-.text {
-    &-light {
-        color: clr(font, white);
-    }
-    &-dark {
-        color: clr(font, black);
+    .inverse {
     }
 }
 
 a {
-    color: clr(primary);
+    color: var(--clr-primary);
+}
+
+div {
+    &.primary {
+        background-color: var(--clr-primary);
+    }
+    &.inverse {
+        background-color: var(--bg-color-inverse);
+    }
 }

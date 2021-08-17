@@ -1,15 +1,26 @@
 $sidebar-width: 6.5rem;
 
 #root {
-    display: grid;
-    grid-template-columns: $sidebar-width 1fr;
-    grid-template-rows: 1fr;
+    display: flex;
 
     width: 100%;
     max-width: 100vw;
     min-height: 100vh;
-}
 
-main {
-    padding: 20px;
+    #app-container {
+        header {
+            position: fixed;
+            width: $sidebar-width;
+        }
+        display: grid;
+        grid-template-columns: $sidebar-width 1fr;
+
+        main {
+            grid-column: 2;
+
+            padding: 20px;
+        }
+
+        width: 100%;
+    }
 }
