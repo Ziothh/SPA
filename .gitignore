@@ -9,8 +9,12 @@ backend/node_modules
 # testing
 /coverage
 
+# dev
+# .vscode
+
 # production
 build
+dist
 
 # misc
 .DS_Store

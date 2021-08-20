@@ -8,31 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Task = exports.TaskTag = void 0;
+exports.Task = void 0;
 const core_1 = require("@mikro-orm/core");
 const type_graphql_1 = require("type-graphql");
-let TaskTag = class TaskTag {
-};
-__decorate([
-    type_graphql_1.Field(() => String),
-    __metadata("design:type", String)
-], TaskTag.prototype, "title", void 0);
-__decorate([
-    type_graphql_1.Field(() => String),
-    __metadata("design:type", String)
-], TaskTag.prototype, "color", void 0);
-TaskTag = __decorate([
-    type_graphql_1.ObjectType()
-], TaskTag);
-exports.TaskTag = TaskTag;
+const Tag_1 = require("../objects/Tag");
 let Task = class Task {
-    TaskTags(task) {
-        return task.tags ? JSON.parse(task.tags) : null;
-    }
 };
 __decorate([
     type_graphql_1.Field(() => type_graphql_1.ID),
@@ -55,16 +36,10 @@ __decorate([
     __metadata("design:type", String)
 ], Task.prototype, "color", void 0);
 __decorate([
+    type_graphql_1.Field(() => [Tag_1.TaskTag], { nullable: true }),
     core_1.Property({ nullable: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Array)
 ], Task.prototype, "tags", void 0);
-__decorate([
-    type_graphql_1.Field(() => [TaskTag], { nullable: true, name: "tags" }),
-    __param(0, type_graphql_1.Root()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Task]),
-    __metadata("design:returntype", Array)
-], Task.prototype, "TaskTags", null);
 __decorate([
     type_graphql_1.Field({ nullable: true }),
     core_1.Property({ nullable: true, type: "date" }),
@@ -76,8 +51,8 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Task.prototype, "isBookmarked", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    core_1.Property(),
+    type_graphql_1.Field({ nullable: true }),
+    core_1.Property({ nullable: true }),
     __metadata("design:type", String)
 ], Task.prototype, "subtasks", void 0);
 Task = __decorate([

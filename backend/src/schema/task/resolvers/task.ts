@@ -1,6 +1,7 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { Task, TaskTag } from "../entities/Task";
+import { Task } from "../entities/Task";
 import { MyContext } from "../../types";
+import { TagInput } from "../objects/Tag";
 
 // Querys: getting data
 // Mutations: updating / creating / deleting data
@@ -22,29 +23,32 @@ export class TasksResolver {
         return em.find(Task, {})
     }
 
-    // @Mutation(() => Task) 
-    // async createTask(
-    //     @Arg("title") title: string,
-    //     @Arg("color") color: string,
-    //     @Arg("isBookmarked") isBookmarked: boolean,
-    //     @Arg("taskset") taskset: string,
-    //     @Arg("tags", {nullable: true}) tags: TaskTag,
-    //     @Arg("deadline",{nullable: true}) deadline: string,
-    //     @Arg("subtasks", {nullable: true}) subtasks: string,
-    //     @Ctx() { em }: MyContext
-    // ): Promise<Task> {
-    //     const task = em.create(Task, {
-    //         title,
-    //         color,
-    //         isBookmarked,
-    //         taskset,
-    //         tags,
-    //         deadline,
-    //         subtasks,
-    //     })
-    //     await em.persistAndFlush(task) // post to DB
-    //     return task
-    // }
+    @Mutation(() => Task) 
+    async createTask(
+        @Arg("title") title: string,
+        @Arg("color") color: string,
+        @Arg("isBookmarked") isBookmarked: boolean,
+        @Arg("taskset") taskset: string,
+        @Arg("tags", () => [TagInput], {nullable:true}) tags: TagInput[],
+        @Arg("deadline",{nullable: true}) deadline: string,
+        @Arg("subtasks", {nullable: true}) subtasks: string,
+        @Ctx() { em }: MyContext
+    ): Promise<Task> {
+        
+        const task = em.create(Task, {
+            title,
+            color,
+            isBookmarked,
+            taskset,
+            tags,
+            deadline,
+            subtasks,
+        })
+        
+        await em.persistAndFlush(task) // post to DB
+        console.log(task);
+        return task
+    }
 
     // @Mutation(() => Task, { nullable: true}) // if none is found return null 
     // async updateTask(

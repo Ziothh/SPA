@@ -15,12 +15,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TasksResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const Task_1 = require("../entities/Task");
+const Tag_1 = require("../objects/Tag");
 let TasksResolver = class TasksResolver {
     getTask(id, { em }) {
         return em.findOne(Task_1.Task, { id });
     }
     getAllTasks({ em }) {
         return em.find(Task_1.Task, {});
+    }
+    async createTask(title, color, isBookmarked, taskset, tags, deadline, subtasks, { em }) {
+        const task = em.create(Task_1.Task, {
+            title,
+            color,
+            isBookmarked,
+            taskset,
+            tags,
+            deadline,
+            subtasks,
+        });
+        await em.persistAndFlush(task);
+        console.log(task);
+        return task;
     }
 };
 __decorate([
@@ -38,6 +53,20 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TasksResolver.prototype, "getAllTasks", null);
+__decorate([
+    type_graphql_1.Mutation(() => Task_1.Task),
+    __param(0, type_graphql_1.Arg("title")),
+    __param(1, type_graphql_1.Arg("color")),
+    __param(2, type_graphql_1.Arg("isBookmarked")),
+    __param(3, type_graphql_1.Arg("taskset")),
+    __param(4, type_graphql_1.Arg("tags", () => [Tag_1.TagInput], { nullable: true })),
+    __param(5, type_graphql_1.Arg("deadline", { nullable: true })),
+    __param(6, type_graphql_1.Arg("subtasks", { nullable: true })),
+    __param(7, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Boolean, String, Array, String, String, Object]),
+    __metadata("design:returntype", Promise)
+], TasksResolver.prototype, "createTask", null);
 TasksResolver = __decorate([
     type_graphql_1.Resolver()
 ], TasksResolver);
