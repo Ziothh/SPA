@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import type {  TaskPageData } from "../components/tasktracker/components/TaskPage";
-import TaskPage from "../components/tasktracker/components/TaskPage";
-import TaskPageSelector from "../components/tasktracker/components/taskPageSelector/TaskPageSelector";
+import type {  TaskPageData } from "../components/tasks/components/TaskPage";
+import TaskPage from "../components/tasks/components/TaskPage";
+import TaskPageSelector from "../components/tasks/components/taskPageSelector/TaskPageSelector";
 import "../scss/pages/TaskManager.scss";
 
 const dummyPages: TaskPageData[] = [

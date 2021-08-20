@@ -1,16 +1,12 @@
 import React from "react"
 
-export type TaskTagData = {
+type TaskTag = {
     name: string,
     color: string,
 }
 
-interface Props {
-    data: TaskTagData
-}
 
-
-const TaskTag: React.FC<Props> = ({data}) => {
+const TaskTag: React.FC<TaskTag> = ({}) => {
     return (
         <div>
             
