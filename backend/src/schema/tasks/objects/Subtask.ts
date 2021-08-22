@@ -17,3 +17,12 @@ export class SubtaskInput {
     @Field()
     isCompleted: boolean
 }
+
+@InputType()
+export class SubtaskMutationInput {
+    @Field()
+    method: "add" | "delete"
+
+    @Field()
+    tag: SubtaskInput
+}

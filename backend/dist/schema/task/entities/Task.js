@@ -11,52 +11,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Task = void 0;
 const core_1 = require("@mikro-orm/core");
-const type_graphql_1 = require("type-graphql");
-const Tag_1 = require("../objects/Tag");
+const TaskTag_1 = require("./TaskTag");
 let Task = class Task {
+    constructor() {
+        this.tags = new core_1.Collection(this);
+    }
 };
 __decorate([
-    type_graphql_1.Field(() => type_graphql_1.ID),
-    core_1.PrimaryKey({}),
+    core_1.PrimaryKey(),
     __metadata("design:type", Number)
 ], Task.prototype, "id", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: "text" }),
+    core_1.Property(),
     __metadata("design:type", String)
 ], Task.prototype, "title", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
     core_1.Property(),
     __metadata("design:type", String)
 ], Task.prototype, "taskset", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: "text" }),
+    core_1.Property(),
     __metadata("design:type", String)
 ], Task.prototype, "color", void 0);
 __decorate([
-    type_graphql_1.Field(() => [Tag_1.TaskTag], { nullable: true }),
-    core_1.Property({ nullable: true }),
-    __metadata("design:type", Array)
+    core_1.OneToMany({ entity: () => TaskTag_1.TaskTag, mappedBy: 'task', orphanRemoval: true }),
+    __metadata("design:type", Object)
 ], Task.prototype, "tags", void 0);
 __decorate([
-    type_graphql_1.Field({ nullable: true }),
-    core_1.Property({ nullable: true, type: "date" }),
+    core_1.Property(),
     __metadata("design:type", Date)
 ], Task.prototype, "deadline", void 0);
-__decorate([
-    type_graphql_1.Field(() => Boolean),
-    core_1.Property(),
-    __metadata("design:type", Boolean)
-], Task.prototype, "isBookmarked", void 0);
-__decorate([
-    type_graphql_1.Field({ nullable: true }),
-    core_1.Property({ nullable: true }),
-    __metadata("design:type", String)
-], Task.prototype, "subtasks", void 0);
 Task = __decorate([
-    type_graphql_1.ObjectType(),
     core_1.Entity({ tableName: "tasks" })
 ], Task);
 exports.Task = Task;

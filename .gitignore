@@ -14,7 +14,7 @@ backend/node_modules
 
 # production
 build
-dist
+backend/dist
 
 # misc
 .DS_Store

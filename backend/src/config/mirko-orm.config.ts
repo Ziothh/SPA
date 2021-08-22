@@ -1,19 +1,22 @@
-import { __prod__ } from "../constants/constants";
-import { Task } from "../schema/task/entities/Task";
-import { MikroORM } from "@mikro-orm/core"
 import path from 'path'
+import { MikroORM } from "@mikro-orm/core"
+import { __prod__ } from "../constants/constants";
+import { Task, TaskGroup, TaskPage, TaskTag } from "../schema/tasks/entities"
 
 export default {
+    entities: [ TaskPage, TaskGroup, Task, TaskTag],
+    
     migrations: {
-        path: path.join(__dirname, './migrations'), // path to the folder with migrations,
+        path: path.join(__dirname, '../../migrations'), // path to the folder with migrations,
         pattern: /^[\w-]+\d+\.[tj]s$/, // regex pattern for the migration files
     },
-    entities: [ Task ],
-    dbName: "spa_data",
-    user: 'root',
-    password: 'Louislune44',
-    host: "localhost",
-    port: 3030,
-    type: "mysql",
+
+    // configurated with .env 
+    dbName: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    type: process.env.DB_TYPE,
     debug: !__prod__,
 } as Parameters<typeof MikroORM.init>[0]; // Enables the autocompletion for types
