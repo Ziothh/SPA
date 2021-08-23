@@ -1,4 +1,3 @@
-import { LoadStrategy } from "@mikro-orm/core";
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { MyContext } from "../../types";
 import { TaskPage } from "../entities/TaskPage";
@@ -67,4 +66,3 @@ export class TaskPagesResolver {
         return true
     }
 }
-

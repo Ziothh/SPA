@@ -28,11 +28,12 @@ export class TaskGroupsResolver {
         @Arg("pageId") pageId: number,
         @Ctx() { taskGroupRepo, taskPageRepo }: MyContext
     ): Promise<TaskGroup> {
-        const page = await taskPageRepo.findOneOrFail(pageId)
+        const page = await taskPageRepo.getReference(pageId)
         const taskGroup = await taskGroupRepo.create({name, page: page})
         await taskGroupRepo.persist(taskGroup)
+        
         await taskGroupRepo.flush()
-        console.log(taskGroup)
+        await taskPageRepo.flush()
         return taskGroup
 
     }

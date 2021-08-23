@@ -34,6 +34,7 @@ export class Task {
     @ManyToOne(() => TaskGroup)
     group: TaskGroup
 
+    // Placeholder: Subtask
     constructor(title: string, color: string, group: TaskGroup, deadline?: Date) {
         this.title = title
         this.color = color
