@@ -1,18 +1,24 @@
 import { Collection, Entity, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { Field, ID, ObjectType } from "type-graphql";
 import { TaskGroup } from "./TaskGroup";
 
+@ObjectType({description: "Pages of tasks, sorted by TaskGroup"})
 @Entity({tableName: "task_pages"})
 export class TaskPage {
+    @Field(() => ID)
     @PrimaryKey()
     id!: number
 
+    @Field(() => String)
     @Property({unique: true})
     name: string
 
-    @Property({type: Boolean})
+    @Field(() => Boolean)
+    @Property({type: Boolean, default: false})
     isBookmarked = false
 
-    @OneToMany(() => TaskGroup, group => group.page)
+    @Field(() => [TaskGroup])
+    @OneToMany(() => TaskGroup, group => group.page, {orphanRemoval: true,})
     taskGroups = new Collection<TaskGroup>(this)
 
     constructor(name: string) {

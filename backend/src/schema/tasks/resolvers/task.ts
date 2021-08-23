@@ -1,31 +1,65 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { DuplicateTagError } from "../../../errors/customErrors";
-import { objectInArray } from "../../../helpers/array";
-import { objectsAreEqual } from "../../../helpers/object";
 import { MyContext } from "../../types";
 import { Task } from "../entities/Task";
-import { SubtaskInput } from "../objects/Subtask";
+import { TaskCreateInput } from "../inputs/taskInput";
+// import { SubtaskInput } from "../objects/Subtask";
 // import { TagInput, TagMutationInput } from "../objects/Tag";
 
 // Querys: getting data
 // Mutations: updating / creating / deleting data
-
-@Resolver()
+@Resolver(() => Task)
 export class TasksResolver {
+    @Query(() => [Task], {nullable: true}) 
+    getAllTasks(
+        @Ctx() { taskRepo }: MyContext
+    ): Promise<Task[] | null> {
+        return taskRepo.findAll({populate: true})
+    }
+
     @Query(() => Task, {nullable: true}) 
     getTask(
         @Arg("id") id: number,
-        @Ctx() { em }: MyContext
+        @Ctx() { taskRepo }: MyContext
     ): Promise<Task | null> {
-        return em.findOne(Task, { id })
+        return taskRepo.findOne({ id }, {populate: true})
     }
 
-    @Query(() => [Task], {nullable: true}) 
-    getAllTasks(
-        @Ctx() { em }: MyContext
-    ): Promise<Task[] | null> {
-        return em.find(Task, {})
+    @Mutation(() => Task) 
+    async createTask(
+        @Arg("data") taskData: TaskCreateInput,
+        @Arg("groupId") groupId: number,
+        @Ctx() { taskRepo, taskGroupRepo }: MyContext
+    ): Promise<Task | null> {
+        const taskGroup = await taskGroupRepo.getReference(groupId)
+        const newTask = taskRepo.create({
+            ...taskData,
+            group: taskGroup
+        })
+        taskRepo.persist(newTask)
+        await taskRepo.flush()
+        await taskGroupRepo.flush()
+        return newTask
     }
+
+
+    @Mutation(() => Task) 
+    async updateTask(
+        @Arg("data") taskData: TaskCreateInput,
+        @Arg("groupId") groupId: number,
+        @Ctx() { taskRepo, taskGroupRepo }: MyContext
+    ): Promise<Task | null> {
+        const taskGroup = await taskGroupRepo.getReference(groupId)
+        if(!taskGroup) return null
+        const newTask = taskRepo.create({
+            ...taskData,
+            group: taskGroup
+        })
+        taskRepo.persist(newTask)
+        await taskRepo.flush()
+        await taskGroupRepo.flush()
+        return newTask
+    }
+
 
     // @Mutation(() => Task) 
     // async createTask(
