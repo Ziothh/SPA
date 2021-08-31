@@ -7,7 +7,13 @@ const path_1 = __importDefault(require("path"));
 const constants_1 = require("../constants/constants");
 const entities_1 = require("../schema/tasks/entities");
 exports.default = {
-    entities: [entities_1.TaskPage, entities_1.TaskGroup, entities_1.Task, entities_1.TaskTag],
+    entities: [
+        entities_1.TaskPage,
+        entities_1.TaskGroup,
+        entities_1.Task,
+        entities_1.TaskTag,
+        entities_1.Subtask
+    ],
     migrations: {
         path: path_1.default.join(__dirname, '../../migrations'),
         pattern: /^[\w-]+\d+\.[tj]s$/,

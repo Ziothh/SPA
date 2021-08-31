@@ -2,8 +2,6 @@ import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { MyContext } from "../../types";
 import { Task } from "../entities/Task";
 import { TaskCreateInput } from "../inputs/taskInput";
-// import { SubtaskInput } from "../objects/Subtask";
-// import { TagInput, TagMutationInput } from "../objects/Tag";
 
 // Querys: getting data
 // Mutations: updating / creating / deleting data

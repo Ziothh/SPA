@@ -1,0 +1,6 @@
+mutation CreateTaskGroup($pageId: Float!, $name: String!) {
+    createTaskGroup(pageId: $pageId, name: $name) {
+        id
+        name
+    }
+}

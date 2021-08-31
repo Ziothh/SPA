@@ -1,5 +1,6 @@
 import { Collection, DateType, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
 import { Field, ID, ObjectType } from "type-graphql";
+import { Subtask } from "./Subtask";
 import { TaskGroup } from "./TaskGroup";
 // import { Field, ID, ObjectType } from "type-graphql"; 
 import { TaskTag } from "./TaskTag";
@@ -7,9 +8,8 @@ import { TaskTag } from "./TaskTag";
 
 // Will compile the class name to lowercase to match the table name
 // Will compile variables: testVal => test_val
-// @ObjectType() //graphql
 @ObjectType()
-@Entity({ tableName:"tasks" }) //mikro-orm
+@Entity({ tableName:"tasks" })
 export class Task {
     @Field(() => ID)
     @PrimaryKey()
@@ -23,35 +23,26 @@ export class Task {
     @Property()
     color: string;
 
-    @Field(() => Date,{nullable: true})
+    @Field(() => Date, {nullable: true})
     @Property({type: DateType, nullable: true})
     deadline?: Date;
 
+    @Field(() => [Subtask])
+    @OneToMany(() => Subtask, subtask => subtask.task, {orphanRemoval: true})
+    subtasks = new Collection<Subtask>(this)
+    
+    @Field(() => [TaskTag])
     @OneToMany(() => TaskTag, tag => tag.task, {orphanRemoval: true})
     tags = new Collection<TaskTag>(this)
 
     @Field(() => TaskGroup)
     @ManyToOne(() => TaskGroup)
     group: TaskGroup
-
-    // Placeholder: Subtask
+    
     constructor(title: string, color: string, group: TaskGroup, deadline?: Date) {
         this.title = title
         this.color = color
         this.group = group
         this.deadline = deadline
     }
-
-    // @Field(() => [TaskTag], {nullable: true})
-    // @OneToMany({ entity: () => TaskTag, mappedBy: 'task', orphanRemoval: true })
-    // tags = new Collection<TaskTag>(this)
-
-    // @Field(() => Boolean)
-    // @Property()
-    // isBookmarked: boolean;
-
-    // @Field(() => [Subtask], {nullable: true})
-    // @Property({ nullable: true})
-    // subtasks?: Subtask[] | null;
-
 }

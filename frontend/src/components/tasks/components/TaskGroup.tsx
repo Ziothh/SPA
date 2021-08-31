@@ -1,9 +1,10 @@
 import React from "react"
 import type { TaskData } from "./Task"
 
-export type TaskCategoryData = {
+export type TaskGroupData = {
+    id: number,
     name: string,
-    task: TaskData[] | []
+    tasks: TaskData[] | []
 }
 
 
@@ -12,7 +13,7 @@ interface Props {
 }
 
 
-const TaskCategory: React.FC<Props> = ({}) => {
+const TaskGroup: React.FC<Props> = ({}) => {
     return (
         <div>
             
@@ -21,4 +22,4 @@ const TaskCategory: React.FC<Props> = ({}) => {
 }
 
 
-export default TaskCategory
+export default TaskGroup

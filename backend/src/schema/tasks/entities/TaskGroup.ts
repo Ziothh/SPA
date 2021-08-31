@@ -2,6 +2,7 @@ import { Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from "
 import { Field, ID, ObjectType } from "type-graphql";
 import { Task } from "./Task";
 import { TaskPage } from "./TaskPage";
+
 @ObjectType({description: "Group of tasks inside a TaskPage"})
 @Entity({tableName: "task_groups"})
 export class TaskGroup {

@@ -1,10 +1,16 @@
 import path from 'path'
 import { MikroORM } from "@mikro-orm/core"
 import { __prod__ } from "../constants/constants";
-import { Task, TaskGroup, TaskPage, TaskTag } from "../schema/tasks/entities"
+import { Task, TaskGroup, TaskPage, TaskTag, Subtask } from "../schema/tasks/entities"
 
 export default {
-    entities: [ TaskPage, TaskGroup, Task, TaskTag],
+    entities: [ 
+        TaskPage, 
+        TaskGroup, 
+        Task, 
+        TaskTag, 
+        Subtask
+    ],
     
     migrations: {
         path: path.join(__dirname, '../../migrations'), // path to the folder with migrations,

@@ -1,14 +1,13 @@
 import React from "react"
-import type { TaskCategoryData } from "./TaskCategory"
+import type { TaskGroupData } from "./TaskGroup"
+import TaskGroup from "./TaskGroup"
 
 export type TaskPageData = {
-    title: {
-        name: string,
-        colorClass: string,
-    },
     id: number,
+    name: string,
+    color: string,
     isBookmarked: boolean,
-    categories: TaskCategoryData[] | []
+    taskGroups: TaskGroupData[]
 }
 
 interface Props {

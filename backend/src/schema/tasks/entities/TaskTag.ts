@@ -1,17 +1,23 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import { Field, ID, ObjectType } from "type-graphql";
 import { Task } from "./Task";
 
-@Entity({ tableName:"task_tags" }) //mikro-orm
+@ObjectType({description: "Tasktag of a task"})
+@Entity({ tableName:"task_tags" })
 export class TaskTag {
+    @Field(() => ID)
     @PrimaryKey({ })
     id!: number;
 
+    @Field(() => String)
     @Property({unique: true})
     title: string;
 
+    @Field(() => String)
     @Property()
     color: string;
 
+    @Field(() => Task)
     @ManyToOne(() => Task)
     task: Task;
 

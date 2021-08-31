@@ -1,11 +1,14 @@
 import React from "react"
-import TaskTag from "./TaskTag"
+import type { SubtaskData } from "./Subtask"
+import type { TaskTagData } from "./TaskTag"
 
 export type TaskData = {
+    id: number,
     title: string,
     color: string,
-    tags: TaskTag[] | []
-    isBookmarked: boolean,
+    deadline: Date | null,
+    subtasks: SubtaskData[]
+    tags: TaskTagData[]
 }
 
 interface Props {

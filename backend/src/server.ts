@@ -5,7 +5,7 @@ import express from 'express'
 import { buildSchema } from 'type-graphql'
 import { __prod__ } from "./constants/constants"
 import DB from "./config/DB"
-import { TaskPagesResolver, TaskGroupsResolver, TasksResolver } from "./schema/tasks/resolvers"
+import { TaskPagesResolver, TaskGroupsResolver, TasksResolver, SubtasksResolver, TaskTagResolver } from "./schema/tasks/resolvers"
 import * as taskRepos from "./schema/tasks/repos"
 import { MyContext } from "./schema/types"
 
@@ -17,7 +17,7 @@ const main = async () => {
     const app = express()
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [TaskPagesResolver, TaskGroupsResolver, TasksResolver],
+            resolvers: [TaskPagesResolver, TaskGroupsResolver, TasksResolver, SubtasksResolver, TaskTagResolver, ],
             validate: false,
         },),
         context: () => ({ 

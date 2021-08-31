@@ -1,0 +1,27 @@
+mutation CreateTaskPage($name: String!) {
+    createTaskPage(name: $name) {
+        id
+        name
+        isBookmarked
+        taskGroups {
+            id
+            name
+            tasks {
+                id
+                title
+                color
+                deadline
+                subtasks {
+                    id
+                    isCompleted
+                    title
+                }
+                tags {
+                    id
+                    title
+                    color
+                }
+            }
+        }
+    }
+}
