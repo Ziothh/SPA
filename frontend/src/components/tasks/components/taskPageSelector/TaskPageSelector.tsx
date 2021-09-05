@@ -6,15 +6,15 @@ import TaskPageOption from "./TaskPageOption";
 import "./TaskPageSelector.scss";
 
 export type PageTitle = {
+    id: number | string
     name: string,
     colorClass: string,
     isBookmarked: boolean,
-    id: number
 }
 interface Props {
     pageTitles: PageTitle[] | [],
-    currentPageID: number | undefined
-    currentPageIDSetter: React.Dispatch<React.SetStateAction<number | undefined>>
+    currentPageID: number | string
+    currentPageIDSetter: React.Dispatch<React.SetStateAction<number | string | undefined>>
 }
 
 const TaskPageSelector: React.FC<Props> = ({pageTitles, currentPageID, currentPageIDSetter}) => {

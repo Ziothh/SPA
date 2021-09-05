@@ -1,5 +1,3 @@
-import React from "react";
-
 import { BsMoon } from "react-icons/bs";
 
 interface Props {

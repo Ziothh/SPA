@@ -2,6 +2,7 @@ import "./config/envConfig" // Get .env variables
 import "reflect-metadata"
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
+import cors from "cors"
 import { buildSchema } from 'type-graphql'
 import { __prod__ } from "./constants/constants"
 import DB from "./config/DB"
@@ -15,21 +16,29 @@ const main = async () => {
     await DB.connect()
 
     const app = express()
+
+    app.use(cors({
+        origin: "http://localhost:3000",
+        // credentials: true
+    }))
+
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [TaskPagesResolver, TaskGroupsResolver, TasksResolver, SubtasksResolver, TaskTagResolver, ],
             validate: false,
         },),
+        // Gql context
         context: () => ({ 
             em: DB.em,
             ...taskRepos,
         } as MyContext),
+        // Determines how the error will be shown
         formatError: __prod__ 
             ? (err) => ({name: err.name, message: err.message}) 
             : undefined
     })
     await apolloServer.start()
-    apolloServer.applyMiddleware({ app }) // Creates graphql endpoint for graphs
+    apolloServer.applyMiddleware({ app, cors: false }) // Creates graphql endpoint for graphs
     
 
     app.listen(4000, () => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "urql";
 import type { TaskPageData } from "../components/tasks/components/TaskPage";
 import TaskPage from "../components/tasks/components/TaskPage";
-import TaskPageSelector from "../components/tasks/components/taskPageSelector/TaskPageSelector";
+import TaskPageSelector, { PageTitle } from "../components/tasks/components/taskPageSelector/TaskPageSelector";
 import { useCreateTaskGroupMutation, useCreateTaskPageMutation, useGetTaskPagesQuery } from "../generated/graphql";
 // 
 import "../scss/pages/TaskManager.scss";
@@ -16,58 +16,58 @@ type TaskTitleData = {
 
 
 const TaskManager = () => {
-    const [loading, setLoading] = useState(true)
-    const [result, getTaskPages] = useGetTaskPagesQuery()
+    // Data Fetching
+    const [setupIsDone, setSetupIsDone] = useState(false) // This will be set to true if there aren't any pages yet and the default page has been created
+    const [{fetching, data, error}, getTaskPages] = useGetTaskPagesQuery()
     const [, createTaskPage] = useCreateTaskPageMutation()
     const [, createTaskGroup] = useCreateTaskGroupMutation()
-    const [taskPages, setTaskPages] = useState(result.data?.getAllTaskPages)
-
-    useEffect(() => {
-        if (result.data?.getAllTaskPages) setTaskPages(result.data.getAllTaskPages)
-        console.log("render")
-    },[result.data?.getAllTaskPages])
     
-    useEffect(() => {
-        const init = async () => {
-            if (result.data?.getAllTaskPages?.length !== 0) setTaskPages(result.data?.getAllTaskPages)
-            else {
-                const {data} = await createTaskPage({name: "Created Main Page"})
-                if (data?.createTaskPage) {
-                    await ["Unprocessed", "On Hold", "In Process", "Complete"].forEach(title => {
-                        console.log("creating pages")
-                        createTaskGroup({name: title, pageId: parseInt(data.createTaskPage.id)})
-                    })
-                    console.log("getting pages")
-                    await getTaskPages()
-                }
-            }
-            // else 
-            // setLoading(false)
-        }
+    // Client-side
+    const [taskPageTitles, setTaskPageTitles] = useState<PageTitle[] | null>([])
+    const [currentTaskPageID, setCurrentTaskPageID] = useState<number | string>()
 
-        if (result.fetching === false) setLoading(false)
-        if (!loading && !result.fetching) init()
-    }, [loading, result.fetching])
-    // const [taskPages, setTaskPages] = useState<TaskPageData[]>([])
-    // const [taskPageTitles, setTaskPageTitles] = useState<TaskTitleData[]>([])
-    // const [currentTaskPageID, setCurrentTaskPageID] = useState<number | undefined>(taskPages[0]?.id)
+    const createDefaultPage = async () => {
+        console.log("creating default values")
+        // Set to true so that we don't get into an infinite loop
+        setSetupIsDone(true) // Needs to go first or the infinite loop still appears
+        const { data } = await createTaskPage({name: "Main Page"})
 
+        const defaultPageID = parseInt(data!.createTaskPage.id)
+        await createTaskGroup({name: "Unprocessed", pageId: defaultPageID})
+        await createTaskGroup({name: "On Hold", pageId: defaultPageID})
+        await createTaskGroup({name: "Processing", pageId: defaultPageID})
+        await createTaskGroup({name: "Complete", pageId: defaultPageID})
 
+        await getTaskPages({requestPolicy: "cache-and-network"})
+    }
+
+    const getTaskPageTitles = () => {
+        const titles: PageTitle[] = data!.getAllTaskPages!.map(({id, isBookmarked, name}) => {return {id, isBookmarked, name, colorClass: "red"}})
+        setTaskPageTitles(titles)
+        setCurrentTaskPageID(titles[0].id)
+    }
 
 
+    if (fetching) {return <h1>Loading...</h1>}
+    if (error) {return <h1>Oops! Something went wrong!</h1>}
+    if (!setupIsDone && !fetching && data?.getAllTaskPages?.length === 0 ) { 
+        createDefaultPage()
+    }
+    if (!data) return <h1>Loading...</h1>
+    else if (!taskPageTitles) {
+        getTaskPageTitles()
+    }
 
-    // if (fetching) return <p>Loading...</p>
-    // if (error) return <p>Oh no... {error.message}</p>
-
+    if (!taskPageTitles && !currentTaskPageID) return <h1>Loading...</h1>
 
     return (
         <div id="task-manager" className="fill">
-            {taskPages && <h1>{JSON.stringify(taskPages)}</h1>}
-            {/* <TaskPageSelector 
-                pageTitles={taskPageTitles} 
-                currentPageID={currentTaskPageID}
+            {/* <h1>{JSON.stringify(data)}</h1> */}
+            <TaskPageSelector 
+                pageTitles={taskPageTitles as PageTitle[]} 
+                currentPageID={currentTaskPageID as string | number}
                 currentPageIDSetter={setCurrentTaskPageID}
-            /> */}
+            />
             {/* {currentTaskPageName && <TaskPage/>} */}
         </div>
     )

@@ -1,4 +1,3 @@
-import React from "react"
 import type { TaskGroupData } from "./TaskGroup"
 import TaskGroup from "./TaskGroup"
 

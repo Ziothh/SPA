@@ -1,4 +1,3 @@
-import React from "react"
 import type { SubtaskData } from "./Subtask"
 import type { TaskTagData } from "./TaskTag"
 

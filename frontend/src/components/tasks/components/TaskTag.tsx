@@ -1,5 +1,3 @@
-import React from "react"
-
 export type TaskTagData = {
     id: number,
     title: string,

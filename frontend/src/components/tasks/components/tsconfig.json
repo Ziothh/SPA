@@ -2,6 +2,6 @@
     "extends": "../../../../tsconfig.json",
     "compilerOptions": {
         // "types": ["react", "tasks"]
-    },
-    "files": ["test/test.ts"]
+    }
+    // "files": ["test/test.ts"]
 }
