@@ -23,8 +23,8 @@ const TaskManager = () => {
     const [, createTaskGroup] = useCreateTaskGroupMutation()
     
     // Client-side
-    const [taskPageTitles, setTaskPageTitles] = useState<PageTitle[] | null>([])
-    const [currentTaskPageID, setCurrentTaskPageID] = useState<number | string>()
+    const [taskPageTitles, setTaskPageTitles] = useState<PageTitle[]>()
+    const [currentTaskPageID, setCurrentTaskPageID] = useState<number>()
 
     const createDefaultPage = async () => {
         console.log("creating default values")
@@ -42,7 +42,7 @@ const TaskManager = () => {
     }
 
     const getTaskPageTitles = () => {
-        const titles: PageTitle[] = data!.getAllTaskPages!.map(({id, isBookmarked, name}) => {return {id, isBookmarked, name, colorClass: "red"}})
+        const titles: PageTitle[] = data!.getAllTaskPages!.map(({id, isBookmarked, name}) => {return {id: parseInt(id), isBookmarked, name, colorClass: "red"}})
         setTaskPageTitles(titles)
         setCurrentTaskPageID(titles[0].id)
     }
@@ -56,16 +56,15 @@ const TaskManager = () => {
     if (!data) return <h1>Loading...</h1>
     else if (!taskPageTitles) {
         getTaskPageTitles()
+        return <h1>Loading...</h1>
     }
-
-    if (!taskPageTitles && !currentTaskPageID) return <h1>Loading...</h1>
 
     return (
         <div id="task-manager" className="fill">
-            {/* <h1>{JSON.stringify(data)}</h1> */}
-            <TaskPageSelector 
+            <TaskPageSelector
+                key={currentTaskPageID} 
                 pageTitles={taskPageTitles as PageTitle[]} 
-                currentPageID={currentTaskPageID as string | number}
+                currentPageID={currentTaskPageID as number}
                 currentPageIDSetter={setCurrentTaskPageID}
             />
             {/* {currentTaskPageName && <TaskPage/>} */}
