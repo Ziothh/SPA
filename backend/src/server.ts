@@ -17,10 +17,10 @@ const main = async () => {
 
     const app = express()
 
-    app.use(cors({
-        origin: "http://localhost:3000",
-        // credentials: true
-    }))
+    // app.use(cors({
+    //     origin: "http://localhost:3000",
+    //     // credentials: true
+    // }))
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
@@ -38,8 +38,8 @@ const main = async () => {
             : undefined
     })
     await apolloServer.start()
-    apolloServer.applyMiddleware({ app, cors: false }) // Creates graphql endpoint for graphs
-    
+    apolloServer.applyMiddleware({ app}) // Creates graphql endpoint for graphs
+    // cors: false (if expressApp.use(cors))
 
     app.listen(4000, () => {
         console.log("🚀 Server started on localhost:4000");

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsFillBookmarkFill, BsPencilSquare, BsThreeDotsVertical } from "react-icons/bs";
-import FullPageClickListener from "../../../general/FullPageClickListener";
-import IconButton from "../../../general/IconButton";
+import FullPageClickListener from "../../general/FullPageClickListener";
+import IconButton from "../../general/IconButton";
 import TaskPageOption from "./TaskPageOption";
 import "./TaskPageSelector.scss";
 
@@ -21,9 +21,6 @@ const TaskPageSelector: React.FC<Props> = ({pageTitles, currentPageID, currentPa
     const [showOtherPageTitles, setShowOtherPageTitles] = useState(false) // show list of page titles
     const [inEdit, setInEdit] = useState(false) // double click on title to change the name
     
-    console.log("render")
-
-    // const [currentPageTitleData, setCurrentPageTitleData] = useState(initialState)
     const currentPageTitleData = pageTitles.find(title => title.id === currentPageID) as PageTitle
     const [pageTitle, setPageTitle] = useState(currentPageTitleData!.name)
 
@@ -45,6 +42,15 @@ const TaskPageSelector: React.FC<Props> = ({pageTitles, currentPageID, currentPa
             </div>
 
             {/* Side icons */}
+            {/* <IconButton 
+                isActive={currentPageTitleData.isBookmarked} 
+                className="fill"
+                fillOnActive={true}
+                title="Bookmark"
+                onClick={toggleIsBookmarked}
+            >
+                <BsFillBookmarkFill/>
+            </IconButton> */}
             <IconButton 
                 isActive={currentPageTitleData.isBookmarked} 
                 className="fill"

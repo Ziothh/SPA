@@ -36,6 +36,7 @@ export type Mutation = {
 
 
 export type MutationUpdateTaskPageArgs = {
+  colorClass?: Maybe<Scalars['String']>;
   isBookmarked?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
@@ -43,6 +44,7 @@ export type MutationUpdateTaskPageArgs = {
 
 
 export type MutationCreateTaskPageArgs = {
+  colorClass: Scalars['String'];
   name: Scalars['String'];
 };
 
@@ -194,6 +196,7 @@ export type TaskPage = {
   id: Scalars['ID'];
   name: Scalars['String'];
   isBookmarked: Scalars['Boolean'];
+  colorClass: Scalars['String'];
   taskGroups: Array<TaskGroup>;
 };
 
@@ -208,10 +211,11 @@ export type TaskTag = {
 
 export type CreateTaskPageMutationVariables = Exact<{
   name: Scalars['String'];
+  colorClass: Scalars['String'];
 }>;
 
 
-export type CreateTaskPageMutation = { __typename?: 'Mutation', createTaskPage: { __typename?: 'TaskPage', id: string, name: string, isBookmarked: boolean, taskGroups: Array<{ __typename?: 'TaskGroup', id: string, name: string, tasks: Array<{ __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: string, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> }> }> } };
+export type CreateTaskPageMutation = { __typename?: 'Mutation', createTaskPage: { __typename?: 'TaskPage', id: string } };
 
 export type CreateTaskGroupMutationVariables = Exact<{
   pageId: Scalars['Float'];
@@ -224,35 +228,13 @@ export type CreateTaskGroupMutation = { __typename?: 'Mutation', createTaskGroup
 export type GetTaskPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTaskPagesQuery = { __typename?: 'Query', getAllTaskPages?: Maybe<Array<{ __typename?: 'TaskPage', id: string, name: string, isBookmarked: boolean, taskGroups: Array<{ __typename?: 'TaskGroup', id: string, name: string, tasks: Array<{ __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: string, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> }> }> }>> };
+export type GetTaskPagesQuery = { __typename?: 'Query', getAllTaskPages?: Maybe<Array<{ __typename?: 'TaskPage', id: string, name: string, isBookmarked: boolean, colorClass: string, taskGroups: Array<{ __typename?: 'TaskGroup', id: string, name: string, tasks: Array<{ __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: string, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> }> }> }>> };
 
 
 export const CreateTaskPageDocument = gql`
-    mutation CreateTaskPage($name: String!) {
-  createTaskPage(name: $name) {
+    mutation CreateTaskPage($name: String!, $colorClass: String!) {
+  createTaskPage(name: $name, colorClass: $colorClass) {
     id
-    name
-    isBookmarked
-    taskGroups {
-      id
-      name
-      tasks {
-        id
-        title
-        color
-        deadline
-        subtasks {
-          id
-          isCompleted
-          title
-        }
-        tags {
-          id
-          title
-          color
-        }
-      }
-    }
   }
 }
     `;
@@ -278,6 +260,7 @@ export const GetTaskPagesDocument = gql`
     id
     name
     isBookmarked
+    colorClass
     taskGroups {
       id
       name

@@ -1,0 +1,38 @@
+@import "../../scss/abstractions/colors";
+
+.task-card {
+    position: relative;
+    padding-left: 20px;
+    background-color: var(--bg-color-inverse);
+
+    &::before {
+        content: "";
+        position: absolute;
+
+        left: 0;
+        top: 20%;
+
+        width: 7px;
+        height: 40px;
+
+        $border-rounding: 3px;
+        border-top-right-radius: $border-rounding;
+        border-bottom-right-radius: $border-rounding;
+        margin-right: 50px;
+    }
+    &.red {
+        &::before {
+            background-color: clr(red);
+        }
+    }
+    &.cyan {
+        &::before {
+            background-color: clr(cyan);
+        }
+    }
+    &.light-blue {
+        &::before {
+            background-color: clr(light-blue);
+        }
+    }
+}

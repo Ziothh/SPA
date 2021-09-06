@@ -1,7 +1,25 @@
-button {
-    padding: 10px;
-}
+$base-padding: 10px;
 
-.circle {
-    border-radius: 50%;
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--clr-primary);
+    color: var(--font-color);
+    border: var(--clr-primary);
+    border-radius: 5px;
+
+    padding: $base-padding;
+
+    width: fit-content;
+    height: fit-content;
+
+    &.noStyle {
+        border: none;
+        background: none;
+    }
+    &.inverse {
+        color: var(--font-color-inverse);
+    }
 }

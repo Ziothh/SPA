@@ -1,3 +1,5 @@
+@import "./baseStylings";
+
 .center {
     display: flex;
     justify-content: center;
@@ -23,6 +25,21 @@
             height: 100%;
         }
     }
+}
+
+.font-inverse {
+    color: var(--font-color-inverse);
+}
+.bg-inverse {
+    background-color: var(--bg-color-inverse);
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.padding {
+    padding: $base-padding;
 }
 
 .border {

@@ -19,11 +19,11 @@ export class TaskPagesResolver {
         @Arg("id") id: number,
         @Ctx() { taskPageRepo }: MyContext
     ): Promise<TaskPage | null> {
-        const a = await taskPageRepo.findOne({id}, {
+        const tp = await taskPageRepo.findOne({id}, {
             populate: true,
         })
-        if (!a) return null
-        return a
+        if (!tp) return null
+        return tp
     }
 
 
@@ -32,6 +32,7 @@ export class TaskPagesResolver {
         @Arg("id") id: number,
         @Arg("name", {nullable: true}) name: string,
         @Arg("isBookmarked", {nullable: true}) isBookmarked: boolean,
+        @Arg("colorClass", {nullable: true}) colorClass: string,
         @Ctx() { taskPageRepo }: MyContext
     ): Promise<TaskPage | gqlError[]> {
         const taskPage = await taskPageRepo.findOne({id})
@@ -40,6 +41,7 @@ export class TaskPagesResolver {
         
         if(name !== undefined) taskPage.name = name
         if(isBookmarked !== undefined) taskPage.isBookmarked = isBookmarked
+        if(colorClass !== undefined) taskPage.colorClass = colorClass
 
         await taskPageRepo.flush()
 
@@ -49,12 +51,15 @@ export class TaskPagesResolver {
     @Mutation(() => TaskPage)
     async createTaskPage(
         @Arg("name") name: string,
+        @Arg("colorClass") colorClass: string,
         @Ctx() { taskPageRepo }: MyContext
     ): Promise<TaskPage> {
-        const taskPage = await taskPageRepo.create({name})
+        const taskPage = await taskPageRepo.create({name, colorClass})
         await taskPageRepo.persistAndFlush(taskPage)
         return taskPage
     }
+
+    
 
     @Mutation(() => Boolean)
     async deleteTaskPage(

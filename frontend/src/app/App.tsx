@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { Provider, createClient } from "urql";
 

@@ -3,6 +3,7 @@ query getTaskPages {
         id
         name
         isBookmarked
+        colorClass
         taskGroups {
             id
             name

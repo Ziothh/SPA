@@ -17,6 +17,10 @@ export class TaskPage {
     @Property({type: Boolean, default: false})
     isBookmarked = false
 
+    @Field(() => String)
+    @Property({type: String})
+    colorClass: string
+
     @Field(() => [TaskGroup])
     @OneToMany(() => TaskGroup, group => group.page, {orphanRemoval: true,})
     taskGroups = new Collection<TaskGroup>(this)

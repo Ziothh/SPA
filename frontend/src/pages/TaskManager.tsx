@@ -1,19 +1,9 @@
-import { useState, useEffect } from "react";
-import { useMutation, useQuery } from "urql";
-import type { TaskPageData } from "../components/tasks/components/TaskPage";
-import TaskPage from "../components/tasks/components/TaskPage";
-import TaskPageSelector, { PageTitle } from "../components/tasks/components/taskPageSelector/TaskPageSelector";
+import { useState } from "react";
+import TaskPage from "../components/tasks/TaskPage";
+import TaskPageSelector, { PageTitle } from "../components/tasks/taskPageSelector/TaskPageSelector";
 import { useCreateTaskGroupMutation, useCreateTaskPageMutation, useGetTaskPagesQuery } from "../generated/graphql";
 // 
 import "../scss/pages/TaskManager.scss";
-
-type TaskTitleData = {
-    id: number,
-    name: string,
-    color: string,
-    isBookmarked: boolean
-}
-
 
 const TaskManager = () => {
     // Data Fetching
@@ -27,10 +17,9 @@ const TaskManager = () => {
     const [currentTaskPageID, setCurrentTaskPageID] = useState<number>()
 
     const createDefaultPage = async () => {
-        console.log("creating default values")
         // Set to true so that we don't get into an infinite loop
         setSetupIsDone(true) // Needs to go first or the infinite loop still appears
-        const { data } = await createTaskPage({name: "Main Page"})
+        const { data } = await createTaskPage({name: "Main Page", colorClass:"red"})
 
         const defaultPageID = parseInt(data!.createTaskPage.id)
         await createTaskGroup({name: "Unprocessed", pageId: defaultPageID})
@@ -42,9 +31,9 @@ const TaskManager = () => {
     }
 
     const getTaskPageTitles = () => {
-        const titles: PageTitle[] = data!.getAllTaskPages!.map(({id, isBookmarked, name}) => {return {id: parseInt(id), isBookmarked, name, colorClass: "red"}})
+        const titles: PageTitle[] = data!.getAllTaskPages!.map(({id, isBookmarked, name, colorClass}) => {return {id: parseInt(id), isBookmarked, name, colorClass}})
         setTaskPageTitles(titles)
-        setCurrentTaskPageID(titles[0].id)
+        setCurrentTaskPageID(titles.find(({isBookmarked}) => isBookmarked === true)?.id ?? titles[0].id)
     }
 
 
@@ -53,21 +42,30 @@ const TaskManager = () => {
     if (!setupIsDone && !fetching && data?.getAllTaskPages?.length === 0 ) { 
         createDefaultPage()
     }
-    if (!data) return <h1>Loading...</h1>
+    if (data?.getAllTaskPages?.length === 0) return <h1>Loading...</h1>
     else if (!taskPageTitles) {
         getTaskPageTitles()
         return <h1>Loading...</h1>
     }
 
+    const currentTaskPage = data!.getAllTaskPages!.find(({ id }) => parseInt(id) === currentTaskPageID)
+
+    // currentTaskPage.
+
     return (
         <div id="task-manager" className="fill">
             <TaskPageSelector
-                key={currentTaskPageID} 
+                key={`selector${currentTaskPageID}`} 
                 pageTitles={taskPageTitles as PageTitle[]} 
                 currentPageID={currentTaskPageID as number}
                 currentPageIDSetter={setCurrentTaskPageID}
             />
-            {/* {currentTaskPageName && <TaskPage/>} */}
+            <TaskPage
+                key={`page${currentTaskPageID}`}
+                id={currentTaskPageID as number}
+                name={currentTaskPage!.name}
+                taskGroups={currentTaskPage!.taskGroups}
+            />
         </div>
     )
 }
