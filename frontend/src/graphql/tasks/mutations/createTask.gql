@@ -1,0 +1,18 @@
+mutation CreateTask($groupID: Float!, $taskData: TaskCreateInput!) {
+    createTask(groupId: $groupID, data: $taskData) {
+        id
+        title
+        color
+        deadline
+        subtasks {
+            id
+            isCompleted
+            title
+        }
+        tags {
+            id
+            title
+            color
+        }
+    }
+}

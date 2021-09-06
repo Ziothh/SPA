@@ -6,6 +6,8 @@
     height: fit-content;
     color: var(--font-color-inverse);
 
+    user-select: none;
+
     &::after {
         content: "";
         background-color: var(--bg-color-inverse);
@@ -21,6 +23,12 @@
     * {
         z-index: 2;
     }
+
+    h2 {
+        font-size: 1.75rem;
+        font-weight: 400;
+    }
+
     button {
         align-self: center;
         padding: 0;
@@ -29,6 +37,10 @@
     }
 
     .tasks {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
         margin-top: 10px;
         margin-bottom: 10px;
 

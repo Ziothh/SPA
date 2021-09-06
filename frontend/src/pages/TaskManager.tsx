@@ -2,7 +2,6 @@ import { useState } from "react";
 import TaskPage from "../components/tasks/TaskPage";
 import TaskPageSelector, { PageTitle } from "../components/tasks/taskPageSelector/TaskPageSelector";
 import { useCreateTaskGroupMutation, useCreateTaskPageMutation, useGetTaskPagesQuery } from "../generated/graphql";
-// 
 import "../scss/pages/TaskManager.scss";
 
 const TaskManager = () => {

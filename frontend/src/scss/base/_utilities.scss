@@ -30,8 +30,11 @@
 .font-inverse {
     color: var(--font-color-inverse);
 }
-.bg-inverse {
-    background-color: var(--bg-color-inverse);
+.bg {
+    background-color: var(--bg-color);
+    &-inverse {
+        background-color: var(--bg-color-inverse);
+    }
 }
 
 .circle {
@@ -45,5 +48,18 @@
 .border {
     &-round {
         border-radius: 5px;
+    }
+}
+
+.flex {
+    display: flex;
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+    }
+    &-column {
+        display: flex;
+        flex-direction: column;
     }
 }

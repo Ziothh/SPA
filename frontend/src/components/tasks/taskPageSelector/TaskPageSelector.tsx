@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BsFillBookmarkFill, BsPencilSquare, BsThreeDotsVertical } from "react-icons/bs";
-import FullPageClickListener from "../../general/FullPageClickListener";
+import FullPageOverlay from "../../general/FullPageOverlay";
 import IconButton from "../../general/IconButton";
 import TaskPageOption from "./TaskPageOption";
 import "./TaskPageSelector.scss";
@@ -90,7 +90,7 @@ const TaskPageSelector: React.FC<Props> = ({pageTitles, currentPageID, currentPa
                             />
                         )}
                     </div>
-                    <FullPageClickListener onClick={toggleShowOtherPageTitles}/>
+                    <FullPageOverlay onClick={toggleShowOtherPageTitles}/>
                 </>)
             }       
         </div>

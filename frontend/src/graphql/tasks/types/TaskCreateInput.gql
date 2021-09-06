@@ -1,0 +1,5 @@
+input TaskCreateInput {
+    title: String!
+    color: String!
+    deadline: DateTime
+}

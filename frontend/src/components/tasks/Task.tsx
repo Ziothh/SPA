@@ -3,6 +3,7 @@ import type { SubtaskData } from "./Subtask"
 import type { TaskTagData } from "./TaskTag"
 
 import "./task.scss"
+import useDate from "../../hooks/useDate"
 
 export type TaskData = { 
     __typename?: 'Task', 
@@ -29,9 +30,9 @@ const Task: React.FC<Props> = ({title, tags, deadline, color, subtasks}) => {
     return (
         <div className={`task-card ${color} border-round padding`}>
             <h3>{title}</h3>
-            <div>tags</div>
-            <div>{deadline}</div>
-            <div>1/4</div>
+            <div className="taskTags">tags</div>
+            <div className="deadline">{deadline && useDate.toNiceText(deadline)}</div>
+            <div className="subtasksCompletionCounter">{`${subtasks.reduce()}`}</div>
         </div>
     )
 }

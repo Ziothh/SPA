@@ -19,6 +19,7 @@ function App() {
   return (
     <Router>
         <div id="app-container" className="theme-dark">
+        <div id="modal"></div>
             <Navbar/>
             <Provider value={ client }>
                 <main>
