@@ -6,11 +6,11 @@ import { Task } from "./Task";
 @Entity({ tableName:"task_tags" })
 export class TaskTag {
     @Field(() => ID)
-    @PrimaryKey({ })
+    @PrimaryKey()
     id!: number;
 
     @Field(() => String)
-    @Property({unique: true})
+    @Property()
     title: string;
 
     @Field(() => String)

@@ -1,0 +1,7 @@
+mutation CreateTaskTag($taskId: Float!, $colorClass: String!, $title: String!) {
+    createTaskTag(taskId: $taskId, color: $colorClass, title: $title) {
+        id
+        title
+        color
+    }
+}

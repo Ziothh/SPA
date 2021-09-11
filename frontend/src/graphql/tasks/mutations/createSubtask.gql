@@ -1,0 +1,7 @@
+mutation CreateSubtask($taskId: Float!, $title: String!) {
+    createSubtask(taskId: $taskId, title: $title) {
+        id
+        title
+        isCompleted
+    }
+}

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import type { Maybe } from "../../generated/graphql"
 import type { SubtaskData } from "./Subtask"
 import type { TaskTagData } from "./TaskTag"
@@ -31,8 +32,14 @@ const Task: React.FC<Props> = ({title, tags, deadline, color, subtasks}) => {
         <div className={`task-card ${color} border-round padding`}>
             <h3>{title}</h3>
             <div className="taskTags">tags</div>
-            <div className="deadline">{deadline && useDate.toNiceText(deadline)}</div>
-            <div className="subtasksCompletionCounter">{`${subtasks.reduce()}`}</div>
+            <div className="deadline">{deadline ? useDate.toNiceText(deadline) : "No deadline\n"}</div>
+            <div className="subtasksCompletionCounter">
+                {   
+                    subtasks.length !== 0 
+                    ? `${subtasks.filter((subtask) => subtask.isCompleted === true).length} / ${subtasks.length}` 
+                    : "No subtasks"
+                }
+            </div>
         </div>
     )
 }

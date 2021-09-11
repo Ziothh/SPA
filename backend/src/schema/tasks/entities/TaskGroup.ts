@@ -14,13 +14,13 @@ export class TaskGroup {
     @Property({unique: false})
     name: string
 
-    @Field(() => TaskPage)
-    @ManyToOne(() => TaskPage)
-    page: TaskPage
-
     @Field(() => [Task])
     @OneToMany(() => Task, task => task.group, {orphanRemoval: true, lazy: true})
     tasks = new Collection<Task>(this)
+
+    @Field(() => TaskPage)
+    @ManyToOne(() => TaskPage)
+    page: TaskPage
    
     constructor(name: string, page: TaskPage) {
         this.name = name

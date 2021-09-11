@@ -2,13 +2,14 @@ import "./config/envConfig" // Get .env variables
 import "reflect-metadata"
 import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
-import cors from "cors"
+// import cors from "cors"
 import { buildSchema } from 'type-graphql'
 import { __prod__ } from "./constants/constants"
 import DB from "./config/DB"
 import { TaskPagesResolver, TaskGroupsResolver, TasksResolver, SubtasksResolver, TaskTagResolver } from "./schema/tasks/resolvers"
 import * as taskRepos from "./schema/tasks/repos"
 import { MyContext } from "./schema/types"
+import { RequestContext } from "@mikro-orm/core"
 
 
 const main = async () => {
@@ -16,6 +17,11 @@ const main = async () => {
     await DB.connect()
 
     const app = express()
+
+    // TODO: figure this thing out with asyncLocalStorage
+    // https://mikro-orm.io/docs/async-local-storage/
+    // need to make multiple  EntityManagers & EntityRepo's so that it can run in parallel
+    app.use((_, __, next) => RequestContext.create(DB.em, next))
 
     // app.use(cors({
     //     origin: "http://localhost:3000",

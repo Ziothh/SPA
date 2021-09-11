@@ -159,7 +159,7 @@ export type Subtask = {
   __typename?: 'Subtask';
   id: Scalars['ID'];
   title: Scalars['String'];
-  isCompleted: Scalars['String'];
+  isCompleted: Scalars['Boolean'];
   task: Task;
 };
 
@@ -209,13 +209,21 @@ export type TaskTag = {
   task: Task;
 };
 
+export type CreateSubtaskMutationVariables = Exact<{
+  taskId: Scalars['Float'];
+  title: Scalars['String'];
+}>;
+
+
+export type CreateSubtaskMutation = { __typename?: 'Mutation', createSubtask: { __typename?: 'Subtask', id: string, title: string, isCompleted: boolean } };
+
 export type CreateTaskMutationVariables = Exact<{
   groupID: Scalars['Float'];
   taskData: TaskCreateInput;
 }>;
 
 
-export type CreateTaskMutation = { __typename?: 'Mutation', createTask: { __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: string, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> } };
+export type CreateTaskMutation = { __typename?: 'Mutation', createTask: { __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: boolean, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> } };
 
 export type CreateTaskPageMutationVariables = Exact<{
   name: Scalars['String'];
@@ -224,6 +232,15 @@ export type CreateTaskPageMutationVariables = Exact<{
 
 
 export type CreateTaskPageMutation = { __typename?: 'Mutation', createTaskPage: { __typename?: 'TaskPage', id: string } };
+
+export type CreateTaskTagMutationVariables = Exact<{
+  taskId: Scalars['Float'];
+  colorClass: Scalars['String'];
+  title: Scalars['String'];
+}>;
+
+
+export type CreateTaskTagMutation = { __typename?: 'Mutation', createTaskTag: { __typename?: 'TaskTag', id: string, title: string, color: string } };
 
 export type CreateTaskGroupMutationVariables = Exact<{
   pageId: Scalars['Float'];
@@ -236,9 +253,22 @@ export type CreateTaskGroupMutation = { __typename?: 'Mutation', createTaskGroup
 export type GetTaskPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTaskPagesQuery = { __typename?: 'Query', getAllTaskPages?: Maybe<Array<{ __typename?: 'TaskPage', id: string, name: string, isBookmarked: boolean, colorClass: string, taskGroups: Array<{ __typename?: 'TaskGroup', id: string, name: string, tasks: Array<{ __typename?: 'Task', id: string, title: string, color: string, deadline?: Maybe<any>, subtasks: Array<{ __typename?: 'Subtask', id: string, isCompleted: string, title: string }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> }> }> }>> };
+export type GetTaskPagesQuery = { __typename?: 'Query', getAllTaskPages?: Maybe<Array<{ __typename?: 'TaskPage', id: string, name: string, isBookmarked: boolean, colorClass: string, taskGroups: Array<{ __typename?: 'TaskGroup', id: string, name: string, tasks: Array<{ __typename?: 'Task', id: string, title: string, deadline?: Maybe<any>, color: string, subtasks: Array<{ __typename?: 'Subtask', id: string, title: string, isCompleted: boolean }>, tags: Array<{ __typename?: 'TaskTag', id: string, title: string, color: string }> }> }> }>> };
 
 
+export const CreateSubtaskDocument = gql`
+    mutation CreateSubtask($taskId: Float!, $title: String!) {
+  createSubtask(taskId: $taskId, title: $title) {
+    id
+    title
+    isCompleted
+  }
+}
+    `;
+
+export function useCreateSubtaskMutation() {
+  return Urql.useMutation<CreateSubtaskMutation, CreateSubtaskMutationVariables>(CreateSubtaskDocument);
+};
 export const CreateTaskDocument = gql`
     mutation CreateTask($groupID: Float!, $taskData: TaskCreateInput!) {
   createTask(groupId: $groupID, data: $taskData) {
@@ -274,6 +304,19 @@ export const CreateTaskPageDocument = gql`
 export function useCreateTaskPageMutation() {
   return Urql.useMutation<CreateTaskPageMutation, CreateTaskPageMutationVariables>(CreateTaskPageDocument);
 };
+export const CreateTaskTagDocument = gql`
+    mutation CreateTaskTag($taskId: Float!, $colorClass: String!, $title: String!) {
+  createTaskTag(taskId: $taskId, color: $colorClass, title: $title) {
+    id
+    title
+    color
+  }
+}
+    `;
+
+export function useCreateTaskTagMutation() {
+  return Urql.useMutation<CreateTaskTagMutation, CreateTaskTagMutationVariables>(CreateTaskTagDocument);
+};
 export const CreateTaskGroupDocument = gql`
     mutation CreateTaskGroup($pageId: Float!, $name: String!) {
   createTaskGroup(pageId: $pageId, name: $name) {
@@ -299,12 +342,12 @@ export const GetTaskPagesDocument = gql`
       tasks {
         id
         title
-        color
         deadline
+        color
         subtasks {
           id
-          isCompleted
           title
+          isCompleted
         }
         tags {
           id

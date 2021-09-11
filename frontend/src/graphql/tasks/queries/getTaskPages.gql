@@ -10,12 +10,12 @@ query getTaskPages {
             tasks {
                 id
                 title
-                color
                 deadline
+                color
                 subtasks {
                     id
-                    isCompleted
                     title
+                    isCompleted
                 }
                 tags {
                     id

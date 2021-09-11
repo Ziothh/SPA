@@ -1,0 +1,1 @@
+export type availableClassColors = "red" | "cyan" | "light-blue"  

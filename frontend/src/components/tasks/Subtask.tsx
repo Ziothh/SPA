@@ -1,13 +1,13 @@
 export type SubtaskData = { 
     __typename?: 'Subtask', 
     id: string, 
-    isCompleted: string, 
+    isCompleted: boolean, 
     title: string 
 }
 
 interface Props {
     id: string, 
-    isCompleted: string, 
+    isCompleted: boolean, 
     title: string 
 }
 

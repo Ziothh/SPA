@@ -9,6 +9,8 @@
     position: relative;
     padding-left: 20px;
 
+    min-height: 120px;
+
     // margin-bottom: 10px;
 
     background-color: var(--bg-color-inverse);
@@ -31,6 +33,7 @@
         justify-self: end;
         opacity: 0.5;
         font-size: 1.3rem;
+        text-align: end;
     }
 
     &::before {

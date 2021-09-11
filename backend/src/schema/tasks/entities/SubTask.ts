@@ -13,9 +13,9 @@ export class Subtask {
     @Property()
     title: string;
 
-    @Field(() => String)
+    @Field(() => Boolean)
     @Property({type: Boolean, default: false})
-    isCompleted = false;
+    isCompleted: boolean = false;
 
     @Field(() => Task)
     @ManyToOne(() => Task)

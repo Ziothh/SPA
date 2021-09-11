@@ -1,8 +1,13 @@
+import type { OperationContext } from "@urql/core";
 import { useState } from "react";
 import TaskPage from "../components/tasks/TaskPage";
 import TaskPageSelector, { PageTitle } from "../components/tasks/taskPageSelector/TaskPageSelector";
 import { useCreateTaskGroupMutation, useCreateTaskPageMutation, useGetTaskPagesQuery } from "../generated/graphql";
 import "../scss/pages/TaskManager.scss";
+
+export const taskOperations = {} as {
+    reFetchPages: (opts?: Partial<OperationContext> | undefined) => void
+}
 
 const TaskManager = () => {
     // Data Fetching
@@ -11,7 +16,9 @@ const TaskManager = () => {
     const [, createTaskPage] = useCreateTaskPageMutation()
     const [, createTaskGroup] = useCreateTaskGroupMutation()
     
-    // Client-side
+    taskOperations.reFetchPages = () => getTaskPages({requestPolicy: "network-only"})
+
+    // State
     const [taskPageTitles, setTaskPageTitles] = useState<PageTitle[]>()
     const [currentTaskPageID, setCurrentTaskPageID] = useState<number>()
 
@@ -35,6 +42,8 @@ const TaskManager = () => {
         setCurrentTaskPageID(titles.find(({isBookmarked}) => isBookmarked === true)?.id ?? titles[0].id)
     }
 
+    console.log("data", data)
+    console.log("error", error)
 
     if (fetching) {return <h1>Loading...</h1>}
     if (error) {return <h1>Oops! Something went wrong!</h1>}
@@ -48,8 +57,6 @@ const TaskManager = () => {
     }
 
     const currentTaskPage = data!.getAllTaskPages!.find(({ id }) => parseInt(id) === currentTaskPageID)
-
-    // currentTaskPage.
 
     return (
         <div id="task-manager" className="fill">
