@@ -34,7 +34,7 @@ const Task: React.FC<Props> = ({title, tags, deadline, color, subtasks, id, inne
     return (
         <div className={`task-card ${color} border-round padding`} ref={innerRef} {...dragHandleProps} {...draggableProps}>
             <h3>{title}</h3>
-            <div className="taskTags">tags</div>
+            <div className="taskTags">Not-implemented</div>
             <div className="deadline">{deadline ? useDate.toNiceText(deadline) : "No deadline\n"}</div>
             <div className="subtasksCompletionCounter">
                 {
