@@ -27,6 +27,7 @@ Je kan een nieuwe taak aanmaken door op de plus te clicken onderaan de Task Grou
 
 #### Tags
 ( Nog niet geïmplementeerd in de frontend. Backend support is al afgewerkt )
+
 Een systeem om taken te categoriseren en te sorteren.
 
 ## Gebruikte Technologieën
@@ -43,3 +44,8 @@ De code is volledig geschreven in TypeScript.
 ### Database
  - MySQL
 
+## Toekomstige Plannen
+ - hosting
+ - color theme support verder afwerken
+ - accounts (ipv globale data in de database)
+ - nieuwe pagina's ( dit hoort snel te gaan aangezien ik nu de technologieën goed onder de knie heb )
