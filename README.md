@@ -46,6 +46,6 @@ De code is volledig geschreven in TypeScript.
 
 ## Toekomstige Plannen
  - hosting
- - color theme support verder afwerken
- - accounts (ipv globale data in de database)
+ - color theme support ( verder af te afwerken )
+ - accounts ( ipv globale data in de database )
  - nieuwe pagina's ( dit hoort snel te gaan aangezien ik nu de technologieën goed onder de knie heb )
