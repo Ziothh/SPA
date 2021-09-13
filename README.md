@@ -1,7 +1,7 @@
 # Single Page Application
 Deze single page web application heb ik gemaakt als oefening om zowel mijn front- als backend skills te oefenen. 
 
-Er werkt op dit moment maar één pagina: de TaskManager. Dit is echter geen probleem aangezien mijn backend voorbereid is opverdere uitbreiding van de app.
+Op dit moment is alleen de TaskManager pagina geïmplementeerd. De backend is echter voorbereid op opverdere uitbreiding van de app.
 
 Post Scriptum: In dit project focus ik op functionaliteit. Mooie layouts komen later
 
