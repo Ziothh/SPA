@@ -186,8 +186,8 @@ export type TaskGroup = {
   __typename?: 'TaskGroup';
   id: Scalars['ID'];
   name: Scalars['String'];
-  page: TaskPage;
   tasks: Array<Task>;
+  page: TaskPage;
 };
 
 /** Pages of tasks, sorted by TaskGroup */
@@ -241,6 +241,14 @@ export type CreateTaskTagMutationVariables = Exact<{
 
 
 export type CreateTaskTagMutation = { __typename?: 'Mutation', createTaskTag: { __typename?: 'TaskTag', id: string, title: string, color: string } };
+
+export type SwitchTaskGroupMutationVariables = Exact<{
+  groupID: Scalars['Float'];
+  taskID: Scalars['Float'];
+}>;
+
+
+export type SwitchTaskGroupMutation = { __typename?: 'Mutation', switchTaskGroup: { __typename?: 'Task', id: string } };
 
 export type CreateTaskGroupMutationVariables = Exact<{
   pageId: Scalars['Float'];
@@ -316,6 +324,17 @@ export const CreateTaskTagDocument = gql`
 
 export function useCreateTaskTagMutation() {
   return Urql.useMutation<CreateTaskTagMutation, CreateTaskTagMutationVariables>(CreateTaskTagDocument);
+};
+export const SwitchTaskGroupDocument = gql`
+    mutation SwitchTaskGroup($groupID: Float!, $taskID: Float!) {
+  switchTaskGroup(groupId: $groupID, id: $taskID) {
+    id
+  }
+}
+    `;
+
+export function useSwitchTaskGroupMutation() {
+  return Urql.useMutation<SwitchTaskGroupMutation, SwitchTaskGroupMutationVariables>(SwitchTaskGroupDocument);
 };
 export const CreateTaskGroupDocument = gql`
     mutation CreateTaskGroup($pageId: Float!, $name: String!) {

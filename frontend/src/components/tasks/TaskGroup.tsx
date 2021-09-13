@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Draggable, Droppable } from "react-beautiful-dnd"
 import TaskCreationOverlay from "./modification/TaskCreationOverlay"
 import type { TaskData } from "./Task"
 import Task from "./Task"
@@ -30,25 +31,40 @@ const TaskGroup: React.FC<Props> = ({name, tasks, id}) => {
         {/* Task group column */}
         <div className="taskGroup border-round padding">
             <h2>{name}</h2>
-            <div className="tasks">
-                {
-                    tasks.length !== 0
-                    ? tasks.map(
-                        ({id, color, subtasks, tags, title, deadline}) =>
-                        <Task
-                            key={`task${id}`}
-                            id={id}
-                            color={color}
-                            subtasks={subtasks}
-                            tags={tags}
-                            title={title}
-                            deadline={deadline}
-                        />)
-                    : (<div className="placeholder">
-                        <h1>There are no tasks to show</h1>
-                      </div>)
-                }
-            </div>
+            <Droppable
+                droppableId={id}
+                type="CARD"
+                direction="vertical"
+                isCombineEnabled={false}
+                >   
+                {dropProvided => (
+                    <div className="tasks" {...dropProvided.droppableProps} ref={dropProvided.innerRef}>
+                    {tasks.length !== 0
+                    ? tasks.map(({id, color, subtasks, tags, title, deadline}, index) =>
+                        <Draggable key={`task${id}`} draggableId={id} index={index}>
+                            {dragProvided => (
+                                <Task
+                                    id={id}
+                                    color={color}
+                                    subtasks={subtasks}
+                                    tags={tags}
+                                    title={title}
+                                    deadline={deadline}
+
+                                    // dnd
+                                    innerRef={dragProvided.innerRef}
+                                    draggableProps={dragProvided.draggableProps}
+                                    dragHandleProps={dragProvided.dragHandleProps}
+                                />
+                            )}
+                        </Draggable>)
+                        : null
+                    // : (<div className="placeholder"><h1>There are no tasks to show</h1></div>)
+                    }
+                    {dropProvided.placeholder}
+                </div>)}
+            </Droppable>
+
             <button onClick={toggleShowCreateTask} className="noStyle inverse">+</button>
         </div>
 

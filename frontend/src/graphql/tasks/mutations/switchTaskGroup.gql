@@ -1,0 +1,5 @@
+mutation SwitchTaskGroup($groupID: Float!, $taskID: Float!) {
+    switchTaskGroup(groupId: $groupID, id: $taskID) {
+        id
+    }
+}

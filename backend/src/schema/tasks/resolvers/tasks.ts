@@ -62,9 +62,11 @@ export class TasksResolver {
         @Ctx() { taskRepo, em, taskGroupRepo }: MyContext
     ): Promise<Task | null> {
         const task = await taskRepo.findOne(id)
-        const taskGroup = await taskGroupRepo.getReference(groupId)
-        if(!task) return null
-        task.group = taskGroup
+        const newTaskGroup = await taskGroupRepo.getReference(groupId)
+        if (!task) return null
+        const oldTaskGroup = taskGroupRepo.getReference(task.group.id)
+        newTaskGroup.tasks.add(task)
+        oldTaskGroup.tasks.remove(task)
         await em.flush()
         return task
     }

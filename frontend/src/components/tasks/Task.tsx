@@ -1,10 +1,10 @@
 /* eslint-disable array-callback-return */
 import type { Maybe } from "../../generated/graphql"
+import useDate from "../../hooks/useDate"
 import type { SubtaskData } from "./Subtask"
+import "./task.scss"
 import type { TaskTagData } from "./TaskTag"
 
-import "./task.scss"
-import useDate from "../../hooks/useDate"
 
 export type TaskData = { 
     __typename?: 'Task', 
@@ -23,20 +23,23 @@ interface Props {
     deadline?: Maybe<any>, 
     subtasks: SubtaskData[], 
     tags: TaskTagData[]
+    draggableProps: any
+    dragHandleProps: any
+    innerRef: (element?: HTMLElement | null | undefined) => any
 }
 
 // TODO: add in the tags and subtask components
 // TODO: allow for creation of taskpages, subtasks, taskgroups, etc
-const Task: React.FC<Props> = ({title, tags, deadline, color, subtasks}) => {
+const Task: React.FC<Props> = ({title, tags, deadline, color, subtasks, id, innerRef, draggableProps, dragHandleProps}) => {
     return (
-        <div className={`task-card ${color} border-round padding`}>
+        <div className={`task-card ${color} border-round padding`} ref={innerRef} {...dragHandleProps} {...draggableProps}>
             <h3>{title}</h3>
             <div className="taskTags">tags</div>
             <div className="deadline">{deadline ? useDate.toNiceText(deadline) : "No deadline\n"}</div>
             <div className="subtasksCompletionCounter">
-                {   
-                    subtasks.length !== 0 
-                    ? `${subtasks.filter((subtask) => subtask.isCompleted === true).length} / ${subtasks.length}` 
+                {
+                    subtasks.length !== 0
+                    ? `${subtasks.filter((subtask) => subtask.isCompleted === true).length} / ${subtasks.length}`
                     : "No subtasks"
                 }
             </div>

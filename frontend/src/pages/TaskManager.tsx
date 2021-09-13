@@ -42,8 +42,8 @@ const TaskManager = () => {
         setCurrentTaskPageID(titles.find(({isBookmarked}) => isBookmarked === true)?.id ?? titles[0].id)
     }
 
-    console.log("data", data)
-    console.log("error", error)
+    // console.log("data", data)
+    // console.log("error", error)
 
     if (fetching) {return <h1>Loading...</h1>}
     if (error) {return <h1>Oops! Something went wrong!</h1>}
