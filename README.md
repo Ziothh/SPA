@@ -1,7 +1,9 @@
 # Single Page Application
-Deze single page web application heb ik gemaakt als oefening om zowel mijn front- als backend skills te oefenen. 
+Deze single page web application ben ik aan bezig als oefening om zowel mijn front- als backend skills te oefenen. 
 
 Op dit moment is alleen de TaskManager pagina geïmplementeerd. De backend is echter voorbereid op verdere uitbreiding van de app.
+
+Meerdere pagina's zullen volgen wanneer ik nieuwe technologieën oefen.
 
 Post Scriptum: In dit project focus ik op functionaliteit. Mooie layouts komen later
 
@@ -48,4 +50,4 @@ De code is volledig geschreven in TypeScript.
  - hosting
  - color theme support ( verder af te afwerken )
  - accounts ( ipv globale data in de database )
- - nieuwe pagina's ( dit hoort snel te gaan aangezien ik nu de technologieën goed onder de knie heb )
+ - nieuwe pagina's ( wanneer ik nieuwe technologieën oefen )
