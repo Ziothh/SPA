@@ -33,18 +33,18 @@ Je kan een nieuwe taak aanmaken door op de plus te clicken onderaan de Task Grou
 Een systeem om taken te categoriseren en te sorteren.
 
 ## Gebruikte Technologieën
-De code is volledig geschreven in TypeScript.
+De code is volledig geschreven in [TypeScript]().
 ### Frontend
- - ReactJS
- - urql
- - scss
+ - [ReactJS](https://reactjs.org)
+ - [urql](https://formidable.com/open-source/urql/docs): GraphQL gebruiken in vorm van React hooks
+ - [scss](https://sass-lang.com)
 ### Backend
- - mikro-orm ( een variant van TypeORM )
- - type-grapqhl
- - express
- - apollo-server
+ - [mikro-orm](https://mikro-orm.io/) een variant van TypeORM. Gebruikt om SQL schema's the genereren
+ - [TypeGraphQL](https://typegraphql.com/docs/introduction.html) Maakt gql schema's, types en resolvers met TypeScript, door middel van classes en decorators!
+ - [Express](https://expressjs.com)
+ - [Apollo Server](https://www.apollographql.com/docs/apollo-server) een GraphQL server
 ### Database
- - MySQL
+ - [MySQL](https://www.mysql.com)
 
 ## Toekomstige Plannen
  - hosting
