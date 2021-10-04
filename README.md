@@ -39,7 +39,8 @@ De code is volledig geschreven in [TypeScript](https://www.typescriptlang.org/).
  - [urql](https://formidable.com/open-source/urql/docs): GraphQL gebruiken in vorm van React hooks
  - [scss](https://sass-lang.com)
 ### Backend
- - [mikro-orm](https://mikro-orm.io/): een variant van TypeORM. Gebruikt om SQL schema's the genereren
+ - [NodeJS](https://nodejs.org): een JavaScript runtime voor de backend
+ - [mikro-orm](https://mikro-orm.io): een variant van TypeORM. Gebruikt om SQL schema's the genereren
  - [TypeGraphQL](https://typegraphql.com/docs/introduction.html): Maakt gql schema's, types en resolvers met TypeScript, door middel van classes en decorators!
  - [Express](https://expressjs.com)
  - [Apollo Server](https://www.apollographql.com/docs/apollo-server): een GraphQL server
