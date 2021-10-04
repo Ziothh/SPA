@@ -33,7 +33,7 @@ Je kan een nieuwe taak aanmaken door op de plus te clicken onderaan de Task Grou
 Een systeem om taken te categoriseren en te sorteren.
 
 ## Gebruikte Technologieën
-De code is volledig geschreven in [TypeScript]().
+De code is volledig geschreven in [TypeScript](https://www.typescriptlang.org/).
 ### Frontend
  - [ReactJS](https://reactjs.org)
  - [urql](https://formidable.com/open-source/urql/docs): GraphQL gebruiken in vorm van React hooks
