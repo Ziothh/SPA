@@ -1,34 +1,61 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
-        "baseUrl": ".",
-        "outDir": "build/dist", // not used
-        "module": "esnext",
-        "target": "esNext",
-        "lib": ["es6", "dom", "esnext.asynciterable", "es2017", "esnext"],
+        // Paths
+        "outDir": "./js", // Disabled
+        "baseUrl": "./src",
+        "typeRoots": ["node_modules/@types/", "@types", ".src/types"],
+
+        // JS target
+        "module": "ESNext",
+        "target": "ESNext",
+        "lib": ["es6", "dom", "DOM.Iterable", "esnext.asynciterable", "es2017", "esnext"],
+
+        // Personal taste
+        "noEmit": true, // if true: Will not compile code and only type check
+        "declaration": false, // Adds {name}.d.ts to the build
+
+        // Modes
+
+        // ! Dev
         "sourceMap": true,
-        "allowJs": true,
-        "moduleResolution": "node",
-        "rootDir": "src",
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noImplicitAny": true,
+        "isolatedModules": false,
+        "noUnusedLocals": false,
+        "noImplicitAny": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "removeComments": false,
+        "strict": true,
+
+        // ! Prod
+        // "sourceMap": false,
+        // "noUnusedLocals": true,
+        // "isolatedModules": true,
+        // "noImplicitAny": true,
+        // "noImplicitReturns": true,
+        // "noImplicitThis": true,
+        //"removeComments": true
+        // "strict": true,
+
+        // Standard settings
+        // JS
+        "allowJs": true, // Allows JS files to be used in TS
+        "checkJs": true, // Checks those JS files
+        // "jsx": "react-jsx",
+        "jsx": "preserve",
+        // Other
+        "experimentalDecorators": true,
+        "moduleResolution": "Node",
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true,
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
-        "removeComments": true,
         "esModuleInterop": true,
-        "strict": true,
         "noFallthroughCasesInSwitch": true,
         "resolveJsonModule": true,
-        "isolatedModules": false,
-        "noEmit": true,
-        "jsx": "react-jsx",
-        "types": ["react"],
-        "typeRoots": ["./node_modules/@types", "../backend/src/@types", "./node_modules"]
+        "paths": {
+            "@components/*": ["components/*"]
+        }
     },
     "include": ["src"],
     "exclude": ["node_modules", "build", "public", "scripts"]
