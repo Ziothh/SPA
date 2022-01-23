@@ -1,0 +1,129 @@
+// @import "../abstractions/colors";
+
+// $base-padding: 10px;
+
+// button,
+// .btn {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+
+//     font-size: 1.5rem;
+//     font-weight: 400;
+
+//     background-color: var(--clr-primary);
+//     color: var(--font-color);
+//     border: var(--clr-primary);
+//     border-radius: 5px;
+
+//     padding: $base-padding;
+
+//     width: fit-content;
+//     height: fit-content;
+
+//     &:focus-visible {
+//         outline: var(--clr-primary) solid 2px;
+//     }
+
+//     &.noStyle {
+//         border: none;
+//         background: none;
+//     }
+//     &.inverse {
+//         color: var(--font-color-inverse);
+//     }
+//     &-green {
+//         background-color: clr(green);
+//         color: clr(font, light-clr);
+//         &:focus-visible {
+//             outline: clr(green);
+//             outline: clr(bg, dark);
+//         }
+//     }
+//     &-red {
+//         background-color: clr(red);
+//         color: clr(font, light-clr);
+//         &:focus-visible {
+//             outline: clr(bg, dark);
+//         }
+//     }
+//     &-rect {
+//         width: 3rem;
+//         height: 3rem;
+//         font-size: 1.8rem !important;
+//     }
+// }
+
+// .header {
+//     margin-bottom: 10px;
+//     padding-bottom: 5px;
+//     border-bottom: 2px solid clr(font, dark-clr);
+// }
+
+// label {
+//     display: flex;
+//     flex-direction: column;
+//     margin-left: 10px;
+//     width: min-content;
+//     font-size: 1.4rem;
+//     h3 {
+//         margin-bottom: 5px;
+//         font-weight: 400 !important;
+//     }
+// }
+
+// .formInputBackground {
+//     position: relative;
+//     border: none;
+//     border-radius: 5px;
+//     background: none;
+//     width: fit-content;
+//     height: fit-content;
+
+//     &::after {
+//         content: "";
+//         background-color: var(--bg-color);
+//         z-index: 99;
+//         border-radius: 5px;
+//         opacity: 0.05;
+//         top: 0;
+//         left: 0;
+//         bottom: 0;
+//         right: 0;
+//         position: absolute;
+//     }
+// }
+
+// input {
+//     position: relative;
+//     padding: 5px;
+//     border: 1px solid clr(font, dark-clr);
+//     border-radius: 5px;
+//     overflow: hidden;
+
+//     background: none;
+//     color: var(--font-color-inverse);
+
+//     &[type="date"]::-webkit-clear-button {
+//         -webkit-appearance: none !important;
+//         display: none !important;
+//     }
+
+//     // &::after {
+//     //     content: "";
+//     //     background-color: red;
+//     //     filter: brightness(10%);
+//     //     z-index: 99;
+//     //     border-radius: 5px;
+//     //     opacity: 0.9;
+//     //     top: 0;
+//     //     left: 0;
+//     //     bottom: 0;
+//     //     right: 0;
+//     //     position: absolute;
+//     // }
+// }
+
+// #fullpage-overlay {
+//     background-color: rgba($color: clr(background, dark), $alpha: 0.85);
+// }

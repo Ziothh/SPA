@@ -1,0 +1,47 @@
+@import "./colors";
+
+:root {
+    // Constants
+    --clr-white: #{clr(white)};
+    --clr-black: #{clr(black)};
+
+    // Configurable
+    --clr-primary: #{clr(red)};
+
+    --clr-font: #{clr(white)};
+    --clr-font-inverted: #{clr(black)};
+
+    --clr-bg: #{clr(black)};
+    --clr-bg-inverted: #{clr(white)};
+
+    --clr-border: #{rgba(clr(white), 0.3)};
+}
+
+// Neutral colors
+$clr-white: var(--clr-white);
+$clr-black: var(--clr-black);
+
+// Configurable
+// General
+$clr-border: var(--clr-border);
+
+// Background
+$clr-bg: var(--clr-bg);
+$clr-bg-inverted: var(--clr-bg-inverted);
+
+// Font
+$clr-font: var(--clr-font);
+$clr-font-inverted: var(--clr-font-inverted);
+
+// Accent colors
+$clr-primary: var(--clr-primary);
+
+// Applying the theme stylings
+body {
+    background: $clr-bg;
+    color: $clr-font;
+
+    .layer {
+        background: rgba(clr(white), 0.1);
+    }
+}

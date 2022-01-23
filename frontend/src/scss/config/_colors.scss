@@ -1,0 +1,53 @@
+// Default colors
+$colors: (
+    primary: #dc3545,
+    // other colors
+    blue: #3e7bfa,
+    light-blue: #4baaf5,
+    dark-blue: rgb(12, 16, 45),
+    purple: #af50bf,
+    orange: rgb(253, 155, 0),
+    seagreen: #01b5be,
+    green: rgb(7, 175, 33),
+    avocado: rgb(174, 197, 35),
+    yellow: #fccc55,
+    indigo: #6372c3,
+    teal: #30aa9f,
+    red: #dc3545,
+    bluegray: #7e96a1,
+    cyan: #30c9dc,
+    pink: #ed4981,
+    white: #e5e7f7,
+    black: #0d1117,
+    // Black was 1c1c28
+    font:
+        (
+            default: #e5e7f7,
+            light-clr: #e5e7f7,
+            dark-clr: #0d1117,
+            dark: (
+                default: #e5e7f7,
+                inverse: #0d1117,
+            ),
+            light: (
+                default: #0d1117,
+                inverse: #e5e7f7,
+            ),
+        ),
+    background: (
+        dark: #0d1117,
+        light: #e5e7f7,
+    ),
+);
+
+// color getter
+@function clr($keys...) {
+    $map: $colors;
+    $scope: $map;
+    $i: 1;
+    @while (type-of($scope) == map) and ($i <= length($keys)) {
+        $scope: map-get($scope, nth($keys, $i));
+        $i: $i + 1;
+    }
+    @return $scope;
+}

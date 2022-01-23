@@ -1,0 +1,16 @@
+$navbar-width: 6.5rem;
+
+#root {
+    min-height: 100vh;
+
+    #app {
+        --navbar-width: #{$navbar-width};
+
+        display: grid;
+
+        grid-template-columns: $navbar-width 1fr;
+        grid-template-rows: 1;
+
+        min-height: 100vh;
+    }
+}

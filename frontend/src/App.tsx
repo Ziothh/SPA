@@ -1,14 +1,17 @@
-import MyComponent from "@components/MyComponent"
-import { ThemeProvider } from "./context/ThemeContext"
+import AppContextProvider from "./context/appContext"
+import AppLayout from "./layouts/AppLayout"
+import PageRoutes from "./pages"
+
+import "./scss/main.scss"
+
+
 
 const App: React.FC = () => {
+
     return (
-        <ThemeProvider>
-            <div>
-                <h1>REact code </h1>
-                <MyComponent/>
-            </div>
-        </ThemeProvider>
+        <AppContextProvider>
+            <PageRoutes/>
+        </AppContextProvider>
     )
 }
 

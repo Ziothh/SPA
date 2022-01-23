@@ -1,46 +1,29 @@
-import { createTheme } from "@mui/material";
-import React, { createContext } from "react";
-import { contextFactory, useToggle } from "../hooks";
-
-export const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#222"
-        }
-
-    }
-})
-
-export const [ThemeProvider, useThemeContext] = contextFactory(() => {
-    const [darkMode, toggleDarkMode] = useToggle(true)
+import React, { createContext, useContext, useMemo } from "react";
+import { useToggle } from "../hooks";
 
 
-    return {
-        darkMode,
-        toggleDarkMode
-    }
-})
 
+interface AppThemeContext {
+    darkMode: boolean
+    toggleDarkMode: (newValue?: boolean) => void
+}
 
-// interface ThemeContext {
-//     darkMode: boolean
-//     toggleDarkMode: () => void
-// }
+const appThemeCtx = createContext<AppThemeContext>(null!)
 
-// export const themeContext = createContext<ThemeContext>(null!)
+export const useAppTheme = () => useContext(appThemeCtx)
 
-// export const ThemeProvider: React.FC = ({children}) => {
-//     const [darkMode, toggleDarkMode] = useToggle(true)
+const AppThemeProvider: React.FC = ({children}) => {
+    //useMediaQuery('(prefers-color-scheme: dark)')
+    const [darkMode, toggleDarkMode] = useToggle(true) 
+    
+    return (
+        <appThemeCtx.Provider value={{
+            darkMode,
+            toggleDarkMode
+        }}>
+                {children}
+        </appThemeCtx.Provider>
+    )
+}
 
-//     const value = {
-//         darkMode,
-//         toggleDarkMode
-//     } as const
-
-
-//     return (
-//         <themeContext.Provider value={value}>
-//             {children}
-//         </themeContext.Provider>
-//     )
-// }
+export default AppThemeProvider

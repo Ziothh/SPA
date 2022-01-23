@@ -1,14 +1,16 @@
 import { useContext } from "react"
 import { createContext, useRef } from "react"
 
-const contextFactory = <T, >(contextState: () => T) => {
+
+const contextFactory = <T, >(contextValue: () => T) => {
     // const stateFunctionRef = useRef(state)
 
     const ctx = createContext<T>(null!)
 
+
     const CtxProvider: React.FC = ({children}) => {
-        const stateFunctionRef = useRef<typeof contextState>()
-        stateFunctionRef.current = contextState
+        const stateFunctionRef = useRef<typeof contextValue>()
+        stateFunctionRef.current = contextValue
         
         const value = stateFunctionRef.current()
         return (

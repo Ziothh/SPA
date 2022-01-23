@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "CommonJS",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "noEmit": true,
+        "outDir": "./dist",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": false, // Should be set to true in prod
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "rootDir": ".",
+        "typeRoots": ["./node_modules/@types", "./src/@types"],
+        "types": ["node"]
+    },
+    "exclude": ["node_modules", "./src/@types", "./src/migrations"],
+    "include": ["./**/*.ts"]
+}

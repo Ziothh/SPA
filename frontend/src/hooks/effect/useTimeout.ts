@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react"
+import { useUpdateEffect } from "."
 
 /** Will run the given `callback` function after the given `delay`.
  * 
@@ -6,10 +7,10 @@ import { useCallback, useEffect, useRef } from "react"
  *  - `clear`: a function that removes the current timeout.
  *  - `reset`: a function that removes the current timeout and starts a new one.
  */
-const useTimeout = (callback: Callback, delay: number) => {
+const useTimeout = (callback: MyTypes.JS.Callback, delay: number, runOnFirstComponentRender: boolean = true) => {
     // Using refs instead of passing a function with useCallback when calling useTimeout
     const callbackRef = useRef(callback)
-    const timeoutRef = useRef<NodeJS.Timeout>()
+    const timeoutRef = useRef<any>()
 
     // Updates the callback function everytime it changes changes 
     // ( => on component render)
@@ -27,10 +28,14 @@ const useTimeout = (callback: Callback, delay: number) => {
         timeoutRef.current && clearTimeout(timeoutRef.current)
     }, [])
 
-    useEffect(() => {
+    // Should run on first component render or not
+    const effectMethod = runOnFirstComponentRender ? useEffect : useUpdateEffect
+
+    effectMethod(() => {
         set()
         return clear
     }, [delay, set, clear])
+
 
     /** Removes the current timeout (if it hasn't completed yet) 
      * and sets a new one. */

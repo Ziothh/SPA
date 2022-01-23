@@ -1,0 +1,20 @@
+.background-primary {
+    background: var(--clr-primary);
+}
+.background-white {
+    background: var(--clr-white);
+}
+.background-black {
+    background: var(--clr-black);
+}
+.background-inverted {
+    background: var(--clr-inverted);
+}
+
+.shadow {
+    box-shadow: $shadow;
+}
+
+.rounded {
+    border-radius: $border-radius;
+}
