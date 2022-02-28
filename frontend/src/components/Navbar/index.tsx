@@ -27,7 +27,7 @@ const Navbar: React.FC<Props> = ({links}) => {
                 <NavLogo/>
                 <ul>
                     {links.map(l => (
-                        <li>
+                        <li key={l.title}>
                             <Tooltip title={l.title} direction={Direction.RIGHT}>
                                 <NavLink to={l.href} className={({isActive}) => classNames(isActive && "active", "fill flex-center")}>
                                     {l.icon}
