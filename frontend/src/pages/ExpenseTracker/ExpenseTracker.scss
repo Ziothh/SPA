@@ -1,0 +1,184 @@
+@import "../../scss/config/colors";
+@import "../../scss/config/theme";
+
+#ExpenseTracker {
+    input:focus {
+        outline: 3px solid var(--clr-primary);
+        border-radius: 5px;
+    }
+
+    label,
+    input {
+        cursor: pointer;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+#ExpenseEntries {
+    .entries-header {
+        display: flex;
+        justify-content: space-between;
+
+        .sorting-control {
+            background: rgba(clr(white), 0.1);
+            padding: 10px 20px;
+            border-radius: 5px;
+
+            label {
+                margin: 0;
+                padding: 0;
+                font-size: 1.5rem;
+                padding-right: 10px;
+            }
+        }
+    }
+
+    .entries {
+        display: flex;
+        margin-top: 10px;
+
+        > * {
+            flex-basis: 100%;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            text-transform: capitalize;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            list-style-type: none;
+
+            li {
+                padding: 10px;
+                font-size: 1.8rem;
+                border-bottom: 1px solid $clr-border;
+                border-left: 5px solid $clr-border;
+                margin-right: 30px;
+                cursor: pointer;
+
+                &:hover {
+                    background: $clr-primary;
+                }
+
+                .entry-smalltext {
+                    display: flex;
+                    span {
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#AddEntry {
+    justify-content: space-between;
+    form {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        align-items: center;
+
+        margin-top: 20px;
+
+        label {
+            font-size: 1.5rem;
+        }
+
+        .form-input-boxes {
+            grid-column: 1 / 4;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-right: 20px;
+
+            .form-row {
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    border: none;
+                    // max-width: ;
+                }
+
+                label {
+                    font-size: 1.8rem;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        .form-radio-row {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+            gap: 30px;
+
+            background: rgba(clr(white), 0.1);
+            padding: 10px 20px;
+            border-radius: 5px;
+
+            .form-radio-element {
+                display: flex;
+
+                &,
+                * {
+                    cursor: pointer;
+                }
+
+                label {
+                    font-size: 2rem;
+                }
+
+                input {
+                    margin-left: auto;
+                }
+            }
+        }
+
+        input[type="submit"] {
+            grid-column: 1 / 5;
+            margin-top: 20px;
+        }
+    }
+}
+
+#ExpenseVsIncome {
+    .beam-container {
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .beam-green {
+            height: 50px;
+            width: 100%;
+            border-radius: 5px;
+            overflow: hidden;
+            background: clr(green);
+
+            .beam-red {
+                transition: all 300ms;
+                background: $clr-primary;
+                height: 100%;
+                border-radius: 5px;
+            }
+        }
+    }
+}

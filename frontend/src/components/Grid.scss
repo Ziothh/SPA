@@ -1,0 +1,23 @@
+@import "../scss/config/colors";
+
+.app-grid {
+    $grid-spacing: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    flex: 1;
+    padding: $grid-spacing;
+
+    gap: $grid-spacing;
+
+    > * {
+        display: flex;
+        flex-direction: column;
+
+        background: rgba(clr(white), 0.1);
+        min-height: 300px;
+        padding: 20px;
+        border-radius: 5px;
+    }
+}

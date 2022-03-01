@@ -45,7 +45,9 @@ const AppLayout: React.FC = ({children}) => {
                     },
                 ]}
             />
-            <Outlet/>
+            <div className="app-content">
+                <Outlet/>
+            </div>
         </div>
     )
 }

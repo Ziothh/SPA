@@ -11,6 +11,14 @@ $navbar-width: 6.5rem;
         grid-template-columns: $navbar-width 1fr;
         grid-template-rows: 1;
 
-        min-height: 100vh;
+        height: 100vh;
+        max-height: 100vh;
+
+        // overflow-x: hidden;
+
+        .app-content {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }

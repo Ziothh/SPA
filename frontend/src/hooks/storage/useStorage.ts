@@ -26,7 +26,11 @@ const useStorage = <T>(key: string, defaultValue: T, storageObject: Storage) => 
         setValue(undefined)
     }, []) 
 
-    return [value, setValue, remove] as const
+    return [
+        (value as T | undefined), 
+        (setValue as React.Dispatch<React.SetStateAction<T>>), 
+        remove
+    ] as const
 }
 
 export default useStorage

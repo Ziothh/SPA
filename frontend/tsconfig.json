@@ -8,7 +8,7 @@
         // JS target
         "module": "ESNext",
         "target": "ESNext",
-        "lib": ["es6", "dom", "DOM.Iterable", "esnext.asynciterable", "es2017", "esnext"],
+        "lib": ["DOM", "DOM.Iterable", "ESNext.AsyncIterable", "ESNext"],
 
         // Personal taste
         "noEmit": true, // if true: Will not compile code and only type check
