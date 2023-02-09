@@ -7,6 +7,13 @@
         border-radius: 5px;
     }
 
+    input[type="radio"],
+    input[type="checkbox"] {
+        &:focus {
+            outline: none;
+        }
+    }
+
     label,
     input {
         cursor: pointer;

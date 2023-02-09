@@ -17,7 +17,7 @@ const AddEntry: React.FC<Props> = ({setExpenses}) => {
                     e.preventDefault(); 
 
                     setExpenses(prev => [...prev, {
-                        ID: prev[prev.length - 1].ID + 1,
+                        ID: Date.now(),
                         title,
                         amount,
                         type

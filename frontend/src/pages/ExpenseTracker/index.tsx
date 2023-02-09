@@ -18,7 +18,6 @@ export interface ExpenseEntry {
 
 const ExpenseTracker: React.FC = () => {
     const [expenses, setExpenses, removeAll] = useLocalStorage<ExpenseEntry[]>("expenses", [])
-    
     return (
         <>
             <PageHeader title="Expense Tracker"></PageHeader>   
