@@ -1,2 +1,2 @@
 SELECT *
-FROM spa_data.tasks;
+FROM backend.tasks;

@@ -1,21 +1,31 @@
 {
-    "name": "spa",
-    "version": "0.1.0",
-    "description": "My single page webapp",
-    "scripts": {
-        "-watch": "tsc -w",
-        "-start": "node dist/server.js",
-        "-start-ts": "ts-node src/server.ts",
-        "-dev": "nodemon dist/server.js",
-        "-dbremove": "npx mikro-orm schema:drop --run",
-        "-dbsync": "npx mikro-orm schema:update --run",
-        "-dbclean": "npm run -dbremove && npm run -dbsync",
-        "-cleandev": "npm run -dbclean && npm run -dev",
-        "bwatch": "cd backend/ && npm run watch",
-        "bstart": "cd backend/ && npm run cleandev",
-        "fstart": "cd frontend/ && npm run start"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+  "name": "spa",
+  "version": "0.1.0",
+  "description": "My single page webapp",
+  "scripts": {
+    "-watch": "tsc -w",
+    "-start": "node dist/server.js",
+    "-start-ts": "ts-node src/server.ts",
+    "-dev": "nodemon dist/server.js",
+    "-dbremove": "npx mikro-orm schema:drop --run",
+    "-dbsync": "npx mikro-orm schema:update --run",
+    "-dbclean": "npm run -dbremove && npm run -dbsync",
+    "-cleandev": "npm run -dbclean && npm run -dev",
+    "bwatch": "cd backend/ && npm run watch",
+    "bstart": "cd backend/ && npm run cleandev",
+    "fstart": "cd frontend/ && npm run start",
+    "docker:start": "docker compose --profile develop up -d",
+    "docker:stop": "docker compose --profile develop stop",
+    "docker:down": "docker compose --profile develop down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "resolutions": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.2"
+  }
 }
