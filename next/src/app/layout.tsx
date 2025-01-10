@@ -43,7 +43,7 @@ export default function RootLayout({
                 <div className="flex min-h-screen w-full max-sm:flex-col">
                     <TRPCReactProvider>
                         <Navbar />
-                        {children}
+                        <main className="w-full">{children}</main>
                     </TRPCReactProvider>
                 </div>
             </body>
@@ -84,7 +84,7 @@ const Navbar: React.FC = (_props) => {
     };
 
     return (
-        <aside className="z-10 hidden w-14 flex-col border-r bg-background sm:flex h-screen sticky top-0">
+        <aside className="sticky top-0 z-10 hidden h-screen w-14 flex-col border-r bg-background sm:flex">
             <Link href="/" className="w-full border-b p-2">
                 <span className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-input bg-background text-lg font-semibold text-primary-foreground transition-all hover:bg-primary md:text-base">
                     {false && (
