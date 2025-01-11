@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { TRPCReactProvider } from "~/trpc/react";
+import { Navbar } from "./Navbar";
+import { DBContextProvider } from "~/modules/db/context/client";
+import { getDBContextServerValues } from "~/modules/db/context/server";
 
 import "~/styles/globals.css";
-import { Navbar } from "./Navbar";
 
 export const metadata: Metadata = {
     title: "SPA",
@@ -18,13 +20,14 @@ export default function RootLayout({
         <html lang="en" className={`${GeistSans.variable} dark`}>
             <body className="min-h-screen">
                 <div className="flex min-h-screen w-full max-sm:flex-col">
-                    <TRPCReactProvider>
-                        <Navbar />
-                        <main className="w-full">{children}</main>
-                    </TRPCReactProvider>
+                    <DBContextProvider {...getDBContextServerValues()}>
+                        <TRPCReactProvider>
+                            <Navbar />
+                            <main className="w-full">{children}</main>
+                        </TRPCReactProvider>
+                    </DBContextProvider>
                 </div>
             </body>
         </html>
     );
 }
-

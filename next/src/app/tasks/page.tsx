@@ -4,6 +4,8 @@ import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Button } from "~/components/shadcn/ui/button";
 import * as Sentry from "@sentry/nextjs";
+import { DataTable } from "~/components/DataTable";
+import { TASK_TABLE_COLUMNS } from "./columns";
 
 const __Page: React.FC<{}> = async (props) => {
     const tasks = await db.client
@@ -61,6 +63,8 @@ const __Page: React.FC<{}> = async (props) => {
 
                 <button className="w-fit">Submit</button>
             </form>
+
+            <DataTable data={tasks} columns={TASK_TABLE_COLUMNS} />
 
             <table>
                 <thead>

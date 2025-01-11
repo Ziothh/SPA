@@ -50,7 +50,13 @@ export function DataTableColumnHeader<TData, TValue>(
                         className="-ml-3 h-8 data-[state=open]:bg-accent"
                     >
                         <span>{props.children}</span>
-                        <SortIcon className={cx("ml-2 h-4 w-4", sortDirection !== false && 'text-primary-foreground')} />
+                        <SortIcon
+                            className={cx(
+                                "ml-2 h-4 w-4",
+                                sortDirection !== false &&
+                                    "text-primary-foreground",
+                            )}
+                        />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
@@ -63,14 +69,14 @@ export function DataTableColumnHeader<TData, TValue>(
                         <ArrowUp
                             className={cx(
                                 "mr-2 h-3.5 w-3.5",
-                                sortDirection === "asc" &&
+                                sortDirection !== "asc" &&
                                     "text-muted-foreground/70",
                             )}
                         />
                         Asc
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                        onClick={() => sortDirection === "asc"
+                        onClick={() => sortDirection === "desc"
                             ? props.column.clearSorting()
                             : props.column.toggleSorting(true)
                         } // prettier-ignore
@@ -78,7 +84,7 @@ export function DataTableColumnHeader<TData, TValue>(
                         <ArrowDown
                             className={cx(
                                 "mr-2 h-3.5 w-3.5",
-                                sortDirection === "desc" &&
+                                sortDirection !== "desc" &&
                                     "text-muted-foreground/70",
                             )}
                         />
