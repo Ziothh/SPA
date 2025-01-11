@@ -1,5 +1,6 @@
-import { cx } from "class-variance-authority"
-import * as React from "react"
+import React from "react"
+import { cx } from 'class-variance-authority'
+
 
 const Table = React.forwardRef<
   HTMLTableElement,

@@ -1,30 +1,16 @@
 "use client";
 
 import {
-    Table as TanstackTable,
     ColumnDef,
-    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
-    getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
-    RowData,
-    RowModel,
     SortingState,
     useReactTable,
-    VisibilityState,
-    RowSelectionState,
 } from "@tanstack/react-table";
 import React from "react";
 import { Button } from "~/components/shadcn/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "~/components/shadcn/ui/dropdown-menu";
-import { Input } from "~/components/shadcn/ui/input";
 
 import {
     Table,
@@ -34,110 +20,32 @@ import {
     TableHeader,
     TableRow,
 } from "~/components/shadcn/ui/table";
-import { useStateObject } from "~/modules/react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
 }
 
-function useRowModelState<State>(
-    initialState: State,
-    getModelFn: <TData extends RowData>() => (
-        table: TanstackTable<TData>,
-    ) => () => RowModel<TData>,
-) {
-    const [state, setState] = React.useState<State>(initialState);
-
-    return {
-        state,
-        setState,
-        getModel: getModelFn(),
-    };
-}
-
 export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const sorting = useRowModelState<SortingState>([], getSortedRowModel);
-    const columnFilters = useRowModelState<ColumnFiltersState>(
-        [],
-        getFilteredRowModel,
-    );
-    const columnVisibility = useStateObject<VisibilityState>({});
-    const rowSelection = useStateObject<RowSelectionState>({});
+    const [sorting, setSorting] = React.useState<SortingState>([]);
 
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-
-        onSortingChange: sorting.setState,
-        getSortedRowModel: sorting.getModel,
-
-        getFilteredRowModel: columnFilters.getModel,
-        onColumnFiltersChange: columnFilters.setState,
-
-        onColumnVisibilityChange: columnVisibility.setValue,
-
-        onRowSelectionChange: rowSelection.setValue,
-
+        getSortedRowModel: getSortedRowModel(),
         state: {
-            sorting: sorting.state,
-            columnFilters: columnFilters.state,
-            columnVisibility: columnVisibility.value,
-            rowSelection: rowSelection.value,
-        },
+            sorting
+        }
     });
 
     return (
-        <section>
-            <header className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={
-                        (table
-                            .getColumn("email")
-                            ?.getFilterValue() as string) ?? ""
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn("email")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
-                            Columns
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                );
-                            })}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </header>
-            <main className="rounded-md border">
+        <div>
+            <div className="rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -189,13 +97,9 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
-            </main>
-            <footer className="flex items-center justify-end space-x-2 py-4">
-                <p className="flex-1 text-sm text-muted-foreground mr-auto">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
-                </p>
+            </div>
 
+            <menu className="flex items-center justify-end space-x-2 py-4">
                 <Button
                     variant="outline"
                     size="sm"
@@ -212,7 +116,7 @@ export function DataTable<TData, TValue>({
                 >
                     Next
                 </Button>
-            </footer>
-        </section>
+            </menu>
+        </div>
     );
 }

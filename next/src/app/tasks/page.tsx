@@ -1,9 +1,133 @@
 import { db } from "~/server/db";
 import { faker } from "@faker-js/faker";
+import { desc, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { Button } from "~/components/shadcn/ui/button";
+import * as Sentry from "@sentry/nextjs";
 
 const __Page: React.FC<{}> = async (props) => {
-    const tasks = await db.client.select().from(db.tasks);
-    return <pre>{JSON.stringify(tasks, null, 4)}</pre>;
+    const tasks = await db.client
+        .select()
+        .from(db.tasks)
+        .orderBy(desc(db.tasks.id));
+
+    return (
+        <div className="flex flex-col gap-10">
+            <form
+                className="flex flex-col gap-4 rounded-md border border-white"
+                action={async (form) => {
+                    "use server";
+
+                    await Sentry.startSpan(
+                        {
+                            name: "Add new task",
+                            op: "form.submit",
+                        },
+                        async (span) => {
+                            const title = form.get("title")?.toString() ?? null;
+
+                            span.setAttribute("input.title", title ?? "<null>");
+                            span.setAttribute("hello", "world");
+                            if (!title) {
+                                throw new Error(
+                                    "Task name should not be empty",
+                                );
+                            }
+
+                            const [newTask] = await db.client
+                                .insert(db.tasks)
+                                .values({
+                                    title,
+                                    status: "TODO",
+                                    label: "BUG",
+                                    priority: "MEDIUM",
+                                })
+                                .returning();
+
+                            console.debug({ newTask });
+                            revalidatePath("/");
+
+                            return newTask;
+                        },
+                    ).catch(() => null);
+                }}
+            >
+                <legend>Add a new task</legend>
+
+                <label>
+                    Task title
+                    <input name="title" className="text-black" />
+                </label>
+
+                <button className="w-fit">Submit</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th className="text-left">ID</th>
+                        <th>Title</th>
+                        <th>Label</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tasks.map((task) => (
+                        <tr key={task.id} className="[&>td]:p-2">
+                            <td className="text-left">{task.id}</td>
+                            <td>{task.title}</td>
+                            <td>{task.label}</td>
+                            <td>{task.priority}</td>
+                            <td>
+                                <select
+                                    className="text-black"
+                                    onChange={async (event) => {
+                                        "use server";
+
+                                        db.client
+                                            .update(db.tasks)
+                                            .set({
+                                                status: event.currentTarget
+                                                    .value as any,
+                                            })
+                                            .where(eq(db.tasks.id, task.id));
+                                    }}
+                                >
+                                    {db.tasks.status.enumValues.map(
+                                        (status) => (
+                                            <option key={status} value={status}>
+                                                {status}
+                                            </option>
+                                        ),
+                                    )}
+                                </select>
+
+                                <form
+                                    action={async () => {
+                                        "use server";
+
+                                        const [deleted] = await db.client
+                                            .delete(db.tasks)
+                                            .where(eq(db.tasks.id, task.id))
+                                            .returning();
+
+                                        console.debug({ deleted });
+
+                                        revalidatePath("/tasks", "page");
+
+                                        return deleted;
+                                    }}
+                                >
+                                    <Button type="submit">Delete</Button>
+                                </form>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
 };
 
 export default __Page;
