@@ -15,7 +15,7 @@ const __Page: React.FC<{}> = async (_props) => {
     return (
         <div className="flex flex-col gap-10">
             <form
-                className="flex flex-col gap-4 rounded-md border border-white"
+                className="flex flex-col gap-4 rounded-md border border-white p-4"
                 action={async (form) => {
                     "use server";
 

@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 const __Layout: React.FC<React.PropsWithChildren> = (props) => (
     <div className="w-full px-10 pb-4">
-        <header className="flex w-full items-center justify-between space-y-4">
+        <header className="flex w-full items-center justify-between my-4">
             <h2 className="text-3xl font-bold tracking-tight">Tasks</h2>
 
             <TabsNav
@@ -67,7 +67,7 @@ const TabsNav: React.FC<{
                     className={cx(
                         "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
                         activeIdx === i &&
-                            "bg-background text-foreground shadow-sm",
+                        "bg-background text-foreground shadow-sm",
                     )}
                 >
                     {x.label}
