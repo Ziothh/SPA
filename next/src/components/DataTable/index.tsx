@@ -19,14 +19,6 @@ import {
 import React from "react";
 import { Button } from "~/components/shadcn/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "~/components/shadcn/ui/dropdown-menu";
-import { Input } from "~/components/shadcn/ui/input";
-
-import {
     Table,
     TableBody,
     TableCell,
@@ -35,10 +27,12 @@ import {
     TableRow,
 } from "~/components/shadcn/ui/table";
 import { useStateObject } from "~/modules/react";
+import { Input } from "../shadcn/ui/input";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    searchable?: Extract<keyof TData, string>;
 }
 
 function useRowModelState<State>(
@@ -56,10 +50,7 @@ function useRowModelState<State>(
     };
 }
 
-export function DataTable<TData, TValue>({
-    columns,
-    data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
     const sorting = useRowModelState<SortingState>([], getSortedRowModel);
     const columnFilters = useRowModelState<ColumnFiltersState>(
         [],
@@ -69,8 +60,8 @@ export function DataTable<TData, TValue>({
     const rowSelection = useStateObject<RowSelectionState>({});
 
     const table = useReactTable({
-        data,
-        columns,
+        data: props.data,
+        columns: props.columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
 
@@ -94,49 +85,24 @@ export function DataTable<TData, TValue>({
 
     return (
         <section>
-            <header className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={
-                        (table
-                            .getColumn("email")
-                            ?.getFilterValue() as string) ?? ""
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn("email")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
-                            Columns
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                );
-                            })}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </header>
+            {!!props.searchable?.length && (
+                <header className="flex items-center py-4">
+                    <Input
+                        placeholder={`Filter ${props.searchable}...`}
+                        value={
+                            (table
+                                .getColumn(props.searchable)
+                                ?.getFilterValue() as string) ?? ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn(props.searchable!)
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                </header>
+            )}
             <main className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -148,10 +114,10 @@ export function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext(),
-                                                  )}
+                                                    header.column.columnDef
+                                                        .header,
+                                                    header.getContext(),
+                                                )}
                                         </TableHead>
                                     );
                                 })}
@@ -180,7 +146,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
+                                    colSpan={props.columns.length}
                                     className="h-24 text-center"
                                 >
                                     No results.
@@ -191,7 +157,7 @@ export function DataTable<TData, TValue>({
                 </Table>
             </main>
             <footer className="flex items-center justify-end space-x-2 py-4">
-                <p className="flex-1 text-sm text-muted-foreground mr-auto">
+                <p className="mr-auto flex-1 text-sm text-muted-foreground">
                     {table.getFilteredSelectedRowModel().rows.length} of{" "}
                     {table.getFilteredRowModel().rows.length} row(s) selected.
                 </p>

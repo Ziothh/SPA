@@ -1,15 +1,16 @@
-import type { Column } from "@tanstack/react-table";
+import type { Column, HeaderContext } from "@tanstack/react-table";
 import {
     ArrowDown,
     ArrowUp,
     ArrowUpDown,
-    ChevronsUpDown,
     EyeOff,
+    MoreHorizontal,
 } from "lucide-react";
 import { cx } from "class-variance-authority";
 import { Button } from "~/components/shadcn/ui/button";
 import {
     DropdownMenu,
+    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
@@ -54,7 +55,7 @@ export function DataTableColumnHeader<TData, TValue>(
                             className={cx(
                                 "ml-2 h-4 w-4",
                                 sortDirection !== false &&
-                                    "text-primary-foreground",
+                                "text-primary-foreground",
                             )}
                         />
                     </Button>
@@ -70,7 +71,7 @@ export function DataTableColumnHeader<TData, TValue>(
                             className={cx(
                                 "mr-2 h-3.5 w-3.5",
                                 sortDirection !== "asc" &&
-                                    "text-muted-foreground/70",
+                                "text-muted-foreground/70",
                             )}
                         />
                         Asc
@@ -85,7 +86,7 @@ export function DataTableColumnHeader<TData, TValue>(
                             className={cx(
                                 "mr-2 h-3.5 w-3.5",
                                 sortDirection !== "desc" &&
-                                    "text-muted-foreground/70",
+                                "text-muted-foreground/70",
                             )}
                         />
                         Desc
@@ -102,3 +103,38 @@ export function DataTableColumnHeader<TData, TValue>(
         </div>
     );
 }
+
+export const DataTableSettingsHeader: React.FC<HeaderContext<any, any>> = (
+    props,
+) => (
+    <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <Button
+                title="Configure header"
+                variant="ghost"
+                className="h-8 w-8 flex-shrink-0 p-0"
+            >
+                <MoreHorizontal className="h-4 w-4 flex-shrink-0" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+            {props.table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                    return (
+                        <DropdownMenuCheckboxItem
+                            key={column.id}
+                            className="capitalize"
+                            checked={column.getIsVisible()}
+                            onCheckedChange={(value) =>
+                                column.toggleVisibility(!!value)
+                            }
+                        >
+                            {column.id}
+                        </DropdownMenuCheckboxItem>
+                    );
+                })}
+        </DropdownMenuContent>
+    </DropdownMenu>
+);

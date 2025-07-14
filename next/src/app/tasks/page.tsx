@@ -3,11 +3,10 @@ import { faker } from "@faker-js/faker";
 import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Button } from "~/components/shadcn/ui/button";
-import * as Sentry from "@sentry/nextjs";
 import { DataTable } from "~/components/DataTable";
 import { TASK_TABLE_COLUMNS } from "./columns";
 
-const __Page: React.FC<{}> = async (props) => {
+const __Page: React.FC<{}> = async (_props) => {
     const tasks = await db.client
         .select()
         .from(db.tasks)
@@ -20,38 +19,26 @@ const __Page: React.FC<{}> = async (props) => {
                 action={async (form) => {
                     "use server";
 
-                    await Sentry.startSpan(
-                        {
-                            name: "Add new task",
-                            op: "form.submit",
-                        },
-                        async (span) => {
-                            const title = form.get("title")?.toString() ?? null;
+                    const title = form.get("title")?.toString() ?? null;
 
-                            span.setAttribute("input.title", title ?? "<null>");
-                            span.setAttribute("hello", "world");
-                            if (!title) {
-                                throw new Error(
-                                    "Task name should not be empty",
-                                );
-                            }
+                    if (!title) {
+                        throw new Error("Task name should not be empty");
+                    }
 
-                            const [newTask] = await db.client
-                                .insert(db.tasks)
-                                .values({
-                                    title,
-                                    status: "TODO",
-                                    label: "BUG",
-                                    priority: "MEDIUM",
-                                })
-                                .returning();
+                    const [newTask] = await db.client
+                        .insert(db.tasks)
+                        .values({
+                            title,
+                            status: "TODO",
+                            label: "BUG",
+                            priority: "MEDIUM",
+                        })
+                        .returning();
 
-                            console.debug({ newTask });
-                            revalidatePath("/");
+                    console.debug({ newTask });
+                    revalidatePath("/");
 
-                            return newTask;
-                        },
-                    ).catch(() => null);
+                    return newTask;
                 }}
             >
                 <legend>Add a new task</legend>
@@ -64,7 +51,11 @@ const __Page: React.FC<{}> = async (props) => {
                 <button className="w-fit">Submit</button>
             </form>
 
-            <DataTable data={tasks} columns={TASK_TABLE_COLUMNS} />
+            <DataTable
+                data={tasks}
+                columns={TASK_TABLE_COLUMNS}
+                searchable="title"
+            />
 
             <table>
                 <thead>

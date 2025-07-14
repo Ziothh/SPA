@@ -12,7 +12,10 @@ import {
 import { Button } from "~/components/shadcn/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Checkbox } from "~/components/shadcn/ui/checkbox";
-import { DataTableColumnHeader } from "~/components/DataTable/DataTable.ColumnHeader";
+import {
+    DataTableColumnHeader,
+    DataTableSettingsHeader,
+} from "~/components/DataTable/DataTable.ColumnHeader";
 import type { db } from "~/server/db";
 import { action_task_delete, action_task_update } from "./actions";
 import { use } from "react";
@@ -85,6 +88,7 @@ export const TASK_TABLE_COLUMNS: ColumnDef<typeof db.tasks.$inferSelect>[] = [
     },
     {
         id: "actions",
+        header: DataTableSettingsHeader,
         cell: ({ row }) => {
             const task = row.original;
 
@@ -92,10 +96,10 @@ export const TASK_TABLE_COLUMNS: ColumnDef<typeof db.tasks.$inferSelect>[] = [
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
+                            title="Open menu"
                             variant="ghost"
                             className="h-8 w-8 flex-shrink-0 p-0"
                         >
-                            <span className="sr-only">Open menu</span>
                             <MoreHorizontal className="h-4 w-4 flex-shrink-0" />
                         </Button>
                     </DropdownMenuTrigger>
